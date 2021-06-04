@@ -18,7 +18,7 @@
             
             <div class="col-sm-3">
                 <p class="text-right">
-                    <a href="remove_from_cart/{{$item->id}}" class="btn btn-danger" role="button">Retirer du panier</a>
+                    <a href="remove_from_cart/{{$item->cart_id}}" class="btn btn-danger" role="button">Retirer du panier</a>
                 </p>
             </div>
         </div>

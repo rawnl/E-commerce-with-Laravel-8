@@ -29,10 +29,11 @@ Route::get('/logout', function(){
 
 Route::get('/', [ProductController::class, 'index'])->name('home');
 
-Route::get('detail/{id}', [ProductController::class, 'detail']);
+Route::get('detail/{id}', [ProductController::class, 'detail'])->name('detail');
 
-Route::get('search', [ProductController::class, 'search']);
+Route::get('search', [ProductController::class, 'search'])->name('search');
 
 Route::post('/add_to_cart', [ProductController::class, 'addToCart'])->name('add_to_cart');
 
 Route::get('/cart', [ProductController::class, 'cart'])->name('cart');
+Route::get('/remove_from_cart/{id}', [ProductController::class, 'removeFromCart'])->name('remove_from_cart');
