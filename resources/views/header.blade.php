@@ -44,7 +44,7 @@ if(Session::has('user')){
           <button type="submit" class="btn btn-default">Rechercher</button>
         </form>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Panier({{$cartItems}})</a></li>
+          <li><a href="{{route('cart')}}">Panier({{$cartItems}})</a></li>
           @if(Session::has('user'))
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{Session::get('user')['prenom'] }} {{Session::get('user')['nom']}}<span class="caret"></span></a>

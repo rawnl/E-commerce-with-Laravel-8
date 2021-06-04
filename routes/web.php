@@ -21,12 +21,18 @@ Route::get('/login', function () {
 });
 
 Route::post('/login', [UserController::class, 'login'])->name('login');
+
 Route::get('/logout', function(){
     Session::forget('user');
     return redirect(route('home'));
 })->name('logout');
 
 Route::get('/', [ProductController::class, 'index'])->name('home');
+
 Route::get('detail/{id}', [ProductController::class, 'detail']);
+
 Route::get('search', [ProductController::class, 'search']);
+
 Route::post('/add_to_cart', [ProductController::class, 'addToCart'])->name('add_to_cart');
+
+Route::get('/cart', [ProductController::class, 'cart'])->name('cart');
