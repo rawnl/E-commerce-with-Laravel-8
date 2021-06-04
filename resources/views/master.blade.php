@@ -25,6 +25,27 @@
         height: 500px;
         padding-top: 100px
     }
+    img.slider-image{
+        height: 400px !important;
+    }
+    .product-class{
+        height:600px;
+    }
+    .slider-text{
+        color: #35443585 !important;
+    }
+    .catalogue-img{
+        height: 200px !important;
+    }
+    .catalogue-wraper{
+        margin:30px; 
+    }
+    .detail-image{
+        height: 300px;
+    }
+    .search-input{
+        width: 500px !important;
+    }
 </style>
 <!--<script>
     $(document).ready(function()
