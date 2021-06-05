@@ -22,6 +22,12 @@ Route::get('/login', function () {
 
 Route::post('/login', [UserController::class, 'login'])->name('login');
 
+Route::get('/register', function () {
+    return view('signin');
+});
+
+Route::post('/register', [UserController::class, 'register'])->name('register');
+
 Route::get('/logout', function(){
     Session::forget('user');
     return redirect(route('home'));
@@ -36,4 +42,5 @@ Route::get('search', [ProductController::class, 'search'])->name('search');
 Route::post('/add_to_cart', [ProductController::class, 'addToCart'])->name('add_to_cart');
 
 Route::get('/cart', [ProductController::class, 'cart'])->name('cart');
+
 Route::get('/remove_from_cart/{id}', [ProductController::class, 'removeFromCart'])->name('remove_from_cart');

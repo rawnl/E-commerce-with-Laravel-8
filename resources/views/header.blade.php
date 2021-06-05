@@ -56,6 +56,7 @@ if(Session::has('user')){
             </li>
           @else
             <li><a href="{{route('login')}}">Se connecter </a></li>
+            <li><a href="{{route('register')}}">S'inscrire </a></li>
           @endif
         </ul>
       </div><!-- /.navbar-collapse -->
