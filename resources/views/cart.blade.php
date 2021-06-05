@@ -3,7 +3,16 @@
 <div class="product-class">
     <div class="catalogue-wraper">
         <h3>Contenu du panier </h3>
-        @if (!$products)
+        @if ($products!=null)
+            <br>
+            <div class="row">    
+                <div class="col-sm-6">
+                    <p class="text-left">
+                        <a href="{{route('order_now')}}" class="btn btn-success" role="button">Confirmer ma commande</a>
+                    </p>
+                </div>
+            </div>
+            <br>
             @foreach ($products as $item)
                 
             <div class="row">

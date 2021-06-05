@@ -50,6 +50,7 @@ if(Session::has('user')){
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{Session::get('user')['prenom'] }} {{Session::get('user')['nom']}}<span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="#">Mon profile</a></li>
+                <li><a href="{{route('myorders')}}">Mes commandes</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="{{route('logout')}}">Déconnecter</a></li>
               </ul>
