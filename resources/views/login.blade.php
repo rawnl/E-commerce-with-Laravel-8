@@ -5,6 +5,11 @@
         <div class="col-sm-4 col-sm-offset-4 login">
             <form class="row g-3" method="POST" action="login">
                 @csrf
+                @if(session('error'))
+                    <div class="alert alert-error" role="alert">
+                        {{ session('error') }}
+                    </div>
+                @endif
                 <div class="col-12">
                   <label for="inputEmail4" class="form-label">Email</label>
                   <input type="email" name="email" class="form-control" id="inputEmail4">

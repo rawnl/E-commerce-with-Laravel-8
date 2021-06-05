@@ -94,4 +94,27 @@ class ProductController extends Controller
                     ->get();
         return view('myorders', ['orders'=>$orders]);
     }
+
+    function dashboard(){
+        $userId = Session::get('user')['id'];
+        $pending_orders = DB::table('orders')
+                    ->join('products', 'orders.product_id', '=', 'products.id')
+                    ->where('orders.status', 'en attente')
+                    ->get();
+        //return $pending_orders;
+        return view('dashboard', ['pending_orders'=>$pending_orders]);
+    }
+
+    function products(){
+        $products = Product::all();
+        return view('productCrud', ['products'=>$products]);
+    }
+
+    function orders(){
+        $orders = DB::table('orders')
+                    ->where('orders.status', 'en attente')
+                    ->get();
+        return view('orders', ['orders'=>$orders]);
+    }
+
 }
