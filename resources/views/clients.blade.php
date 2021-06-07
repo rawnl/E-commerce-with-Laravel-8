@@ -30,39 +30,8 @@
               </a>
             </li>
           </ul>
-        <!--
-          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-            <span>Saved reports</span>
-            <a class="d-flex align-items-center text-muted" href="#">
-              <span data-feather="plus-circle"></span>
-            </a>
-          </h6>
-          <ul class="nav flex-column mb-2">
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span data-feather="file-text"></span>
-                Current month
-              </a>
-            </li>
-          </ul>
-        -->
         </div>
       </nav>
-
-      <!--<div class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-          <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group mr-2">
-              <button class="btn btn-sm btn-outline-secondary">Share</button>
-              <button class="btn btn-sm btn-outline-secondary">Export</button>
-            </div>
-            <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
-              <span data-feather="calendar"></span>
-              This week
-            </button>
-          </div>
-        </div>
-        -->
 
         <h2>Clients</h2>
         <div class="table-responsive">
@@ -73,6 +42,8 @@
                 <th>Nom</th>
                 <th>Prénom</th>
                 <th>Email</th>
+                <th>Etat</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -84,6 +55,35 @@
                         <td>{{$item->nom}}</td>
                         <td>{{$item->prenom}}</td>
                         <td>{{$item->email}}</td>
+                        
+                        @if ($item->etat == "AUTHORIZED")
+                          <td>Autorisé</td>
+                        @else
+                          <td>Blocqué</td>
+                        @endif
+                
+                        <td>
+                          @if ($item->etat == "AUTHORIZED")
+    
+                            <div class="col-sm-4">
+                              <p class="text-left">
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#blockModal" onclick="blockUser(this.id)" id="blockUser/{{ $item->id }}">
+                                  Bloquer
+                                </button>
+                              </p>
+                            </div>
+                            
+                          @else
+  
+                          <div class="col-sm-4">
+                            <p class="text-left">
+                                <a href="unblockUser/{{$item->id}}" class="btn btn-info" role="button">Débloquer</a>
+                            </p>
+                          </div>    
+                          
+                          @endif
+                                
+                        </td>
 
                     </tr>  
                     @endforeach                
@@ -98,5 +98,35 @@
       </div>
     </div>
 </div>
+
+<!-- Block Modal -->
+<div class="modal fade" id="blockModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Suppression</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Voulez vous vraiment bloquer ce clients ? 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+        <a class="btn btn-danger" id="blockByID" role="button">Oui</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+  function blockUser(url){
+    document.getElementById("blockByID").setAttribute("href", url );
+  }
+
+</script>
 
 @endsection

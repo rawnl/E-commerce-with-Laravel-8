@@ -51,15 +51,27 @@ class UserController extends Controller
     }
 
     function clients(){
-        /*$users = DB::table('users')
-             ->select(DB::raw('count(*) as user_count, status'))
-             ->where('status', '<>', 1)
-             ->groupBy('status')
-             ->get();
-        */
         $clients = DB::table('users')
                         ->where('type', 'USR')
                         ->get();
         return view('clients', ['clients'=>$clients]);
+    }
+
+    function blockUser($id){
+        
+        $User = User::find($id);
+        $User->etat ='BLOCKED';
+        $User->save();
+        
+        return redirect(route('clients'));
+    }
+
+    function unblockUser($id){
+        
+        $User = User::find($id);
+        $User->etat ='AUTHORIZED';
+        $User->save();
+        
+        return redirect(route('clients'));
     }
 }

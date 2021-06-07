@@ -165,13 +165,7 @@ class ProductController extends Controller
     }
 
     function addProduct(Request $request){
-/*        
-        $name = $request->input('name');
-        $price = $request->input('price');
-        $category = $request->input('category');
-        $description = $request->input('description');
-        $quantity = $request->input('quantity');
-*/
+
         $product = new Product();
         $product->name= $request->input('name');;
         $product->price = $request->input('price');
@@ -182,6 +176,5 @@ class ProductController extends Controller
         $product->save();
 
         return redirect()->back();      
-        //return $request->input();
     }
 }

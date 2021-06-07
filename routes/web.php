@@ -58,6 +58,11 @@ Route::get('/deleteProduct/{id}', [ProductController::class, 'deleteProduct'])->
 
 Route::post('/addProduct', [ProductController::class, 'addProduct'])->name('addProduct');
 
+Route::get('/blockUser/{id}', [UserController::class, 'blockUser'])->name('blockUser');
+
+Route::get('/unblockUser/{id}', [UserController::class, 'unblockUser'])->name('unblockUser');
+
+
 /*
 Route::group(['middleware' => ['auth', 'type:USR']], function(){
     Route::post('/add_to_cart', [ProductController::class, 'addToCart'])->name('add_to_cart');
