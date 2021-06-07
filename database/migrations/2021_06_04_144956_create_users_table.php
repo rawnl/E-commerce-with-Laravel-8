@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('type')->default('USR');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('etat')->default('AUTHORIZED');
             $table->timestamps();
         });
     }
