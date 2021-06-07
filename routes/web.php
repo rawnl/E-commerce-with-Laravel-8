@@ -52,6 +52,11 @@ Route::get('/validateOrder/{id}', [ProductController::class, 'validateOrder'])->
 
 Route::get('/cancelOrder/{id}', [ProductController::class, 'cancelOrder'])->name('cancelOrder');
 
+Route::get('/editProduct/{id}', [ProductController::class, 'editProduct'])->name('editProduct');
+
+Route::get('/deleteProduct/{id}', [ProductController::class, 'deleteProduct'])->name('deleteProduct');
+
+Route::post('/addProduct', [ProductController::class, 'addProduct'])->name('addProduct');
 
 /*
 Route::group(['middleware' => ['auth', 'type:USR']], function(){

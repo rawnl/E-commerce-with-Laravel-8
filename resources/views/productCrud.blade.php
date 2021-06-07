@@ -63,9 +63,21 @@
           </div>
         </div>
         -->
-
-        <h2>Produits</h2>
+        
+        
+        
         <div class="table-responsive">
+          <div class="col-sm-6">
+            <h2>Produits</h2>  
+            <p>
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModalScrollable">
+                Ajouter un nouveau produit
+              </button>
+              <!--<a href="" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" role="button">Ajouter un nouveau  produit</a>-->
+            </p> 
+          </div>
+
           <table class="table table-striped table-sm">
             <thead>
               <tr>
@@ -74,6 +86,7 @@
                 <th>Prix</th>
                 <th>Description</th>
                 <th>Quantité</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -86,7 +99,21 @@
                         <td>{{$item->price}}</td>
                         <td>{{$item->description}}</td>
                         <td>{{$item->quantity}}</td>
+                        <td>
+                          
+                          <div class="col-sm-4">
+                            <p class="text-left">
+                                <a href="editProduct/{{$item->id}}" class="btn btn-warning" role="button">Modifier</a>
+                            </p>
+                          </div>
+    
+                          <div class="col-sm-4">
+                            <p class="text-left">
+                                <a href="deleteProduct/{{$item->id}}" class="btn btn-danger" role="button">Supprimer</a>
+                            </p>
+                          </div>
 
+                        </td>
                     </tr>  
                     @endforeach                
                 @else
@@ -100,4 +127,59 @@
     </div>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="editModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">Nouveau Produit</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <form action="{{route('addProduct')}}" method="POST">
+        <div class="modal-body">
+          @csrf
+                <div class="col-12">
+                    <label for="nom" class="form-label">Nom de produit</label>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="">
+                </div>
+
+                <div class="col-12">
+                    <label for="prenom" class="form-label">Prix</label>
+                    <input type="text" class="form-control" name="price" id="price" placeholder="">
+                </div>
+
+                <div class="col-12">
+                  <label for="prenom" class="form-label">Catégorie</label>
+                  <input type="text" class="form-control" name="category" id="category" placeholder="">
+              </div>
+
+                <div class="col-12">
+                    <label for="inputEmail4" class="form-label">Quantité</label>
+                    <input type="text" class="form-control" name='quantity' id="quantity" placeholder="">
+                </div>
+                
+                <div class="col-12">
+                    <label for="password" class="form-label">Description</label>
+                    <textarea type="password" class="form-control" name="description" id="description" placeholder=""></textarea>
+                </div>
+
+                <div class="col-12">
+                  <label for="inputEmail4" class="form-label">Image URL</label>
+                  <input type="text" class="form-control" name='image' id="image" placeholder="">
+              </div>
+              
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuuler</button>
+          <button type="submit" class="btn btn-primary">Valider</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
 @endsection

@@ -111,7 +111,6 @@ class ProductController extends Controller
     }
 
     function orders(){
-        //$orders = DB::table('orders')->get();
         $orders = DB::table('orders')
                     ->join('products', 'orders.product_id', '=', 'products.id')
                     ->join('users', 'orders.user_id', '=', 'users.id')
@@ -160,4 +159,29 @@ class ProductController extends Controller
         return redirect()->back()->with('pending_orders', $pending_orders);
     }
     
+    function deleteProduct($id){
+        Product::destroy($id);
+        return redirect(route('products'));
+    }
+
+    function addProduct(Request $request){
+/*        
+        $name = $request->input('name');
+        $price = $request->input('price');
+        $category = $request->input('category');
+        $description = $request->input('description');
+        $quantity = $request->input('quantity');
+*/
+        $product = new Product();
+        $product->name= $request->input('name');;
+        $product->price = $request->input('price');
+        $product->category = $request->input('category');
+        $product->description = $request->input('description');
+        $product->quantity = $request->input('quantity');
+        $product->image = $request->input('image');
+        $product->save();
+
+        return redirect()->back();      
+        //return $request->input();
+    }
 }
