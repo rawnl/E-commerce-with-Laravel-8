@@ -69,9 +69,9 @@
                         <td>
                           
                           <div class="col-sm-4">
-                            <p class="text-left">
-                                <a href="editProduct/{{$item->id}}" class="btn btn-warning" role="button">Modifier</a>
-                            </p>
+                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#updateModal" onclick="update(this.id)" id="{{ $item->id }}">
+                              Modifier
+                            </button>
                           </div>
     
                           <div class="col-sm-4">
@@ -174,10 +174,85 @@
   </div>
 </div>
 
+<!-- Update Modal -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">Modification</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <form action="{{route('editProduct')}}" method="POST">
+        <div class="modal-body">
+          @csrf
+                <div class="col-12">
+                    <input type="hidden" class="form-control" name="updateId" id="updateId" placeholder="">
+                </div>
+                <div class="col-12">
+                    <label for="nom" class="form-label">Nom de produit</label>
+                    <input type="text" class="form-control" name="updateName" id="updateName" placeholder="">
+                </div>
+
+                <div class="col-12">
+                    <label for="prenom" class="form-label">Prix</label>
+                    <input type="text" class="form-control" name="updatePrice" id="updatePrice" placeholder="">
+                </div>
+
+                <div class="col-12">
+                  <label for="prenom" class="form-label">Catégorie</label>
+                  <input type="text" class="form-control" name="updateCategory" id="updateCategory" placeholder="">
+              </div>
+
+                <div class="col-12">
+                    <label for="inputEmail4" class="form-label">Quantité</label>
+                    <input type="text" class="form-control" name='updateQuantity' id="updateQuantity" placeholder="">
+                </div>
+                
+                <div class="col-12">
+                    <label for="password" class="form-label">Description</label>
+                    <textarea class="form-control" name="updateDescription" id="updateDescription" placeholder=""></textarea>
+                </div>
+
+                <div class="col-12">
+                  <label for="inputEmail4" class="form-label">Image URL</label>
+                  <input type="text" class="form-control" name='updateImage' id="updateImage" placeholder="">
+              </div>
+              
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuuler</button>
+          <button type="submit" class="btn btn-success">Modifier</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
 <script>
 
   function passId(url){
     document.getElementById("deleteByID").setAttribute("href", url );
+  }
+
+
+  function update(id){
+    
+    var produits = {!! json_encode($products->toArray(), JSON_HEX_TAG) !!};
+    
+    var produit = produits[id-1] ;
+
+    document.getElementById("updateId").setAttribute("value", id );
+    document.getElementById("updateName").setAttribute("value", produit.name);
+    document.getElementById("updatePrice").setAttribute("value", produit.price );
+    document.getElementById("updateQuantity").setAttribute("value", produit.quantity );
+    document.getElementById("updateCategory").setAttribute("value", produit.category);    
+    document.getElementById("updateDescription").innerHTML = produit.description;
+    document.getElementById("updateImage").setAttribute("value", produit.image );
+
   }
 
 </script>

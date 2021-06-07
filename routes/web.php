@@ -52,7 +52,7 @@ Route::get('/validateOrder/{id}', [ProductController::class, 'validateOrder'])->
 
 Route::get('/cancelOrder/{id}', [ProductController::class, 'cancelOrder'])->name('cancelOrder');
 
-Route::get('/editProduct/{id}', [ProductController::class, 'editProduct'])->name('editProduct');
+Route::post('/editProduct', [ProductController::class, 'editProduct'])->name('editProduct');
 
 Route::get('/deleteProduct/{id}', [ProductController::class, 'deleteProduct'])->name('deleteProduct');
 

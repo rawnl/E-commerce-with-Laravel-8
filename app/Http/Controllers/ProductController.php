@@ -177,4 +177,18 @@ class ProductController extends Controller
 
         return redirect()->back();      
     }
+
+    function editProduct(Request $request){
+        $product = Product::find($request->input('updateId'));
+
+        $product->name= $request->input('updateName');;
+        $product->price = $request->input('updatePrice');
+        $product->category = $request->input('updateCategory');
+        $product->description = $request->input('updateDescription');
+        $product->quantity = $request->input('updateQuantity');
+        $product->image = $request->input('updateImage');
+        $product->save();
+        
+        return redirect()->back(); 
+    }
 }
