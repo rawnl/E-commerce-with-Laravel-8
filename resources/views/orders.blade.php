@@ -69,22 +69,38 @@
           <table class="table table-striped table-sm">
             <thead>
               <tr>
-                <th>N° </th>
-                <th>ID Article</th>
-                <th>ID Client </th>
+                <th>Comande</th>
+                <th>Détails d'article</th>
+                <th>Détails sur le client </th>
             </tr>
             </thead>
             <tbody>
                 @if ($orders != null)
-                @foreach ($orders as $item)
-                <tr>
-                    
-                    <td>{{$item->id}}</td>
-                    <td>{{$item->product_id}}</td>
-                    <td>{{$item->user_id}}</td>
+                  @foreach ($orders as $item)
+                    <tr>
+                        
+                        <td>
+                          <h4>N° {{$item->id}}</h4>
+                          <p>Etat: {{$item->status}}</p>
+                          <p>Méthode de paiement : {{$item->payment_method}}</p>
+                          <p>Paiement : {{$item->payment_status}}</p>
+                        </td>
+                        
+                        <td>
+                          <h4>{{$item->name}}</h4>
+                          <p>Prix : {{$item->price}} DA</p>
+                          <p>Catégorie : {{$item->category}}</p>
+                          <p>Description : {{$item->description}}</p>
+                        </td>
+                        
+                        <td>
+                          <h4>{{$item->nom}} {{$item->prenom}}</h4>
+                          <p>E-mail : {{$item->email}}</p>
+                          <p>Adresse de livraison : {{$item->address}}</p>
+                        </td>
 
-                </tr>  
-                @endforeach                
+                    </tr>  
+                  @endforeach                
               @else
                 <p>Table vide</p>                
               @endif  

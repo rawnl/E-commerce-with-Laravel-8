@@ -48,6 +48,11 @@ Route::get('/products', [ProductController::class, 'products'])->name('products'
 
 Route::get('/clients', [UserController::class, 'clients'])->name('clients');
 
+Route::get('/validateOrder/{id}', [ProductController::class, 'validateOrder'])->name('validateOrder');
+
+Route::get('/cancelOrder/{id}', [ProductController::class, 'cancelOrder'])->name('cancelOrder');
+
+
 /*
 Route::group(['middleware' => ['auth', 'type:USR']], function(){
     Route::post('/add_to_cart', [ProductController::class, 'addToCart'])->name('add_to_cart');

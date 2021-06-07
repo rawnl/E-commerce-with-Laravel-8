@@ -100,8 +100,8 @@ class ProductController extends Controller
         $pending_orders = DB::table('orders')
                     ->join('products', 'orders.product_id', '=', 'products.id')
                     ->where('orders.status', 'en attente')
+                    ->select('orders.*','products.name')
                     ->get();
-        //return $pending_orders;
         return view('dashboard', ['pending_orders'=>$pending_orders]);
     }
 
@@ -111,10 +111,53 @@ class ProductController extends Controller
     }
 
     function orders(){
+        //$orders = DB::table('orders')->get();
         $orders = DB::table('orders')
-                    ->where('orders.status', 'en attente')
+                    ->join('products', 'orders.product_id', '=', 'products.id')
+                    ->join('users', 'orders.user_id', '=', 'users.id')
+                    ->select('orders.*', 
+                            'users.nom', 'users.prenom', 'users.email', 
+                            'products.name', 'products.price', 'products.description', 'products.category')
                     ->get();
         return view('orders', ['orders'=>$orders]);
     }
 
+    function changeOrderStatus(Request $request){
+        $carts = Cart::where('user_id', $userId)->get();
+        foreach($carts as $cart){
+            $order = new Order;
+            $order->product_id = $cart['product_id'];
+            $order->user_id = $cart['user_id'];
+            $order->status='en attente';
+            $order->payment_method = $request->payment_method;
+            $order->payment_status = 'en attente';
+            $order->address = $request->address;
+            $order->save();
+            Cart::where('user_id', $userId)->delete();
+        }
+        return redirect(route('home'));
+    }
+
+    function cancelOrder($id){
+        
+        $order = Order::find($id);
+        $order->status ='annulee';
+        $order->payment_status = 'annulee';
+        $order->save();
+        
+        return redirect(route('dashboard'));//, ['pending_orders'=>$pending_orders]);
+    }
+
+    function validateOrder($id){
+        DB::table('orders')->where('id',$id)
+                            ->update(['status' => 'confirmee','payment_status' => 'confirmee']);
+
+        $pending_orders = DB::table('orders')
+                    ->join('products', 'orders.product_id', '=', 'products.id')
+                    ->where('orders.status', 'en attente')
+                    ->get();
+        
+        return redirect()->back()->with('pending_orders', $pending_orders);
+    }
+    
 }

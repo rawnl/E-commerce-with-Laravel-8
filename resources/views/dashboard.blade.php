@@ -73,7 +73,7 @@
                 <th>ID client</th>
                 <th>Article </th>
                 <th>Status</th>
-                <th>Total</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -85,7 +85,21 @@
                     <td>{{$item->user_id}}</td>
                     <td>{{$item->name}}</td>
                     <td>{{$item->status}}</td>
-                    <td>sit</td>
+                    <td>
+
+                      <div class="col-sm-3">
+                        <p class="text-left">
+                            <a href="validateOrder/{{$item->id}}" class="btn btn-success" role="button">Confirmer</a>
+                        </p>
+                      </div>
+
+                      <div class="col-sm-3">
+                        <p class="text-left">
+                            <a href="cancelOrder/{{$item->id}}" class="btn btn-warning" role="button">Annuler</a>
+                        </p>
+                      </div>
+
+                    </td>
 
                 </tr>  
                 @endforeach                
