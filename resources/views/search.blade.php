@@ -9,7 +9,7 @@
         @foreach ($result as $item)
             <div class="col-sm-6 col-md-4">
                 <div class="thumbnail search-item">
-                    <img class="catalogue-img" src="{{$item['image']}}" alt="...">
+                    <img class="catalogue-img" src="{{asset('storage/images/'.$item['image'])}}" alt="...">
                     <div class="caption">
                         <h3>{{$item['name']}}</h3>
                         <p>Prix : {{$item['price']}} DA</p>

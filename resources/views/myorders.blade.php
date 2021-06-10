@@ -8,7 +8,7 @@
                 
             <div class="row">
                 <div class="col-sm-3">
-                    <img class="catalogue-img" src="{{$item->image}}" alt="...">
+                    <img class="catalogue-img" src="{{asset('storage/images/'.$item->image)}}" alt="...">
                 </div>  
 
                 <div class="col-sm-6">

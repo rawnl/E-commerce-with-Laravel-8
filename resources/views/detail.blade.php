@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-6">
-            <img class="detail-image" src="{{$product['image']}}" alt="">
+            <img class="detail-image" src="{{asset('storage/images/'.$product['image'])}}" alt="">
         </div>
 
         <div class="col-sm-6">

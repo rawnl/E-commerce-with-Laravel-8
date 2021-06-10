@@ -17,7 +17,7 @@
         @foreach ($products as $item)
             <div class="item {{$item['id']==1?'active':'' }}">
                 <a href="detail/{{$item['id']}}">
-                <img src="{{$item['image']}}" class="slider-image">
+                <img src="{{asset('storage/images/'.$item['image'])}}" class="slider-image">
                 <div class="carousel-caption slider-text">
                     <h3>{{$item['name']}}</h3>
                     <p>{{$item['description']}}</p>
@@ -44,7 +44,7 @@
         @foreach ($products as $item)
             <div class="col-sm-6 col-md-4">
                 <div class="thumbnail catalogue-item">
-                    <img class="catalogue-img" src="{{$item['image']}}" alt="...">
+                    <img class="catalogue-img" src="{{asset('storage/images/'.$item['image'])}}" alt="...">
                     <div class="caption">
                         <h3>{{$item['name']}}</h3>
                         <p>Prix : {{$item['price']}} DA</p>

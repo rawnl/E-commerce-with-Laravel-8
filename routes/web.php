@@ -62,6 +62,7 @@ Route::get('/blockUser/{id}', [UserController::class, 'blockUser'])->name('block
 
 Route::get('/unblockUser/{id}', [UserController::class, 'unblockUser'])->name('unblockUser');
 
+//Route::get('displayImage/{filename}', [ProductController::class, 'displayImage'])->name('displayImage');
 
 /*
 Route::group(['middleware' => ['auth', 'type:USR']], function(){

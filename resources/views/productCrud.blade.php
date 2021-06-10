@@ -185,7 +185,7 @@
         </button>
       </div>
       
-      <form action="{{route('editProduct')}}" method="POST">
+      <form action="{{route('editProduct')}}" method="POST" enctype="multipart/form-data">
         <div class="modal-body">
           @csrf
                 <div class="col-12">
@@ -217,9 +217,9 @@
                 </div>
 
                 <div class="col-12">
-                  <label for="inputEmail4" class="form-label">Image URL</label>
-                  <input type="text" class="form-control" name='updateImage' id="updateImage" placeholder="">
-              </div>
+                  <label for="updateImage" class="form-label">Image</label>
+                  <input type="file" class="form-control-file" name='updateImage' id="updateImage" placeholder="">
+                </div>
               
         </div>
         <div class="modal-footer">

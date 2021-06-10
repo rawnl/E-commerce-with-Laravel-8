@@ -178,6 +178,28 @@ class ProductController extends Controller
         return redirect()->back();      
     }
 
+    /*
+    public function displayImage($filename){
+        //$path = storage_public('images/' . $filename);
+        $path = public_path('images/'.$filename);
+
+        if (!File::exists($path)) {
+    
+            abort(404);
+    
+        }
+        $file = File::get($path);
+        $type = File::mimeType($path);
+    
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+    
+        return dd($response);
+        return $response;
+
+    }
+    */
+
     function editProduct(Request $request){
         $product = Product::find($request->input('updateId'));
 
@@ -186,8 +208,22 @@ class ProductController extends Controller
         $product->category = $request->input('updateCategory');
         $product->description = $request->input('updateDescription');
         $product->quantity = $request->input('updateQuantity');
-        $product->image = $request->input('updateImage');
+        //$product->image = $request->input('updateImage');
+        //$product->save();
+        /*
+        $request->validate([
+            'updateImage' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
+        $imageName = time().'.'.$request->updateImage->extension();  
+        $request->updateImage->move(public_path('images'), $imageName);
+        $product->image = $imageName;
+        */
+        $imageName = $request->file('updateImage')->getClientOriginalName();
+        $request->file('updateImage')->storeAs('public/images',$imageName);
+        $product->image = $imageName;
         $product->save();
+        
+        //$request->file->store('images', 'public');
         
         return redirect()->back(); 
     }
