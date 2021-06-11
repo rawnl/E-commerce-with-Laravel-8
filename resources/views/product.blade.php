@@ -20,7 +20,7 @@
                 <img src="{{asset('storage/images/'.$item['image'])}}" class="slider-image">
                 <div class="carousel-caption slider-text">
                     <h3>{{$item['name']}}</h3>
-                    <p>{{$item['description']}}</p>
+                    <p>{{$item['short-description']}}</p>
                 </div>
                 </a>
             </div>
@@ -47,17 +47,18 @@
                     <img class="catalogue-img" src="{{asset('storage/images/'.$item['image'])}}" alt="...">
                     <div class="caption">
                         <h3>{{$item['name']}}</h3>
-                        <p>Prix : {{$item['price']}} DA</p>
-                        <p class="text-right">
-                            
-                           <form action="{{route('add_to_cart')}}" method="POST">
-                                @csrf
-                                <input type="hidden" name="product_id" value="{{$item['id']}}">
-                                <button class="btn btn-primary">Ajouter au panier</button> 
-                           </form>
-                           
+                        
+                        @if ($item['sale-price'] != null )
+                            <p>Prix : <del> {{$item['price']}} DA </del> {{$item['sale-price']}} DA</p>                            
+                        @else
+                            <p>Prix : {{$item['price']}} DA </p>                        
+                        @endif
+                        <p> {{$item['short-description']}}</p>
+                        <div class="d-flex justify-content-between text-right">                            
+                           <a href="addToCart/{{$item['id']}}" class="btn btn-primary" role="button">Ajouter au panier</a>
                            <a href="detail/{{$item['id']}}" class="btn btn-default" role="button">Détails</a>
-                        </p>
+                        </div>
+
                     </div>
                 </div>
             </div>

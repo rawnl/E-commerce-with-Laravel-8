@@ -46,6 +46,9 @@
     .search-input{
         width: 500px !important;
     }
+    del{
+        color: rgb(224, 43, 43) !important;
+    }
 </style>
 <!--<script>
     $(document).ready(function()

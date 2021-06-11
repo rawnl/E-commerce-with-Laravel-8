@@ -26,13 +26,14 @@ class ProductController extends Controller
         return view('search', ['result'=>$result]);
     }
 
-    function addToCart(Request $request){
-        if($request->session()->has('user')){
+    function addToCart($id){
+        //$request->session()->has('user')
+        if(Session::has('user')){
             $cart = new Cart();
-            $cart->user_id=$request->session()->get('user')['id'];
-            $cart->product_id=$request->product_id;
+            $cart->user_id=Session::get('user')['id']; //$request->session()->get('user')['id'];
+            $cart->product_id=$id;//$request->product_id;
             $cart->quantity=1;
-            $cart->total=Product::find($request->product_id)['price'];
+            $cart->total=Product::find($id)['price'];//Product::find($request->product_id)['price'];
             $cart->save();
             return redirect(route('home'));
         }else{
@@ -187,14 +188,16 @@ class ProductController extends Controller
 
         $product->name= $request->input('updateName');;
         $product->price = $request->input('updatePrice');
-        $product->category = $request->input('updateCategory');
+        $product->category_id = (int)$request->input('updateCategory');
         $product->description = $request->input('updateDescription');
         $product->quantity = $request->input('updateQuantity');
      
-        $imageName = $request->file('updateImage')->getClientOriginalName();
-        $request->file('updateImage')->storeAs('public/images',$imageName);
+        if($request->hasFile('updateImage')){
+            $imageName = $request->file('updateImage')->getClientOriginalName();
+            $request->file('updateImage')->storeAs('public/images',$imageName);
+            $product->image = $imageName;
+        }
         
-        $product->image = $imageName;
         $product->save();
         
         return redirect()->back(); 
