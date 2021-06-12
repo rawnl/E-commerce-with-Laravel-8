@@ -55,7 +55,13 @@
                         @endif
                         <p> {{$item['short-description']}}</p>
                         <div class="d-flex justify-content-between text-right">                            
-                           <a href="addToCart/{{$item['id']}}" class="btn btn-primary" role="button">Ajouter au panier</a>
+                            <form action="{{route('add_to_cart')}}" method="POST">
+                            @csrf
+                                <input type="hidden" name="product_id" value="{{$item['id']}}">
+                                <p class="text-right">
+                                <button class="btn btn-primary">Ajouter au panier</button> 
+                                </p>
+                            </form> 
                            <a href="detail/{{$item['id']}}" class="btn btn-default" role="button">Détails</a>
                         </div>
 
