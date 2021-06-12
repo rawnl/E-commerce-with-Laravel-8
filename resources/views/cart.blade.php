@@ -29,7 +29,7 @@
                 <div class="col-sm-3">
 
                     <div class="btn-group-vertical" role="group" aria-label="...">
-                        <a href="#" class="btn btn-default"><span class="dropup"><span class="caret"></span></span></a>
+                        <a href="{{ route('increase-quantity', ['id' => $item->cart_id ]) }} " class="btn btn-default"><span class="dropup"><span class="caret"></span></span></a>
                         <p></p>
                         <p class="text-center">{{$item->quantity}}</p>
                         <p></p>

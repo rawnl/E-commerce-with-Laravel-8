@@ -31,8 +31,8 @@ class ProductController extends Controller
         
             $product_price = Product::find($request->product_id)['price'];
             
-            if(Product::find($request->product_id)['sale-price'] != null){
-                $product_price = Product::find($request->product_id)['sale-price'];
+            if(Product::find($request->product_id)['sale_price'] != null){
+                $product_price = Product::find($request->product_id)['sale_price'];
             }
 
             $cart = DB::table('carts')
@@ -65,25 +65,46 @@ class ProductController extends Controller
             return redirect(route('login'));
         }
     }
-/*
     function increaseQty($cart_id){
-        $cart = Cart::find($cart_id);
-        $Qt = $cart->quantity + 1;
-        Cart::update($cart_id, $Qt);
+        $cart = Cart::find($cart_id);     
+        $product = Product::find($cart->product_id);
+
+        if($product->stock_status == "instock" && $product->quantity > 0){
+
+            $Qt = $cart->quantity + 1;
+            $old_total = $cart->total;
+            
+            $product_price = Product::find($cart->product_id)['price'];
+            
+            if(Product::find($cart->product_id)['sale_price'] != null){
+                $product_price = Product::find($cart->product_id)['sale_price'];
+            }
+
+            $total = $old_total + $product_price ;
+
+            $cart->quantity = $Qt;
+            $cart->total = $total;
+            $cart->save();
+
+            return redirect(route('cart'));
+                
+        }else{
+            //send msg no element left
+            //removeFromCart($cart_id);
+        }
+
     }
-*/
-    function decreaseQty($cart_id){
-        
+
+    function decreaseQty($cart_id){        
         $cart = Cart::find($cart_id);
 
         if($cart->quantity > 1){
-
             $Qt = $cart->quantity - 1;
             $old_total = $cart->total;
             $product_price = Product::find($cart->product_id)['price'];
             
-            if(Product::find($cart->product_id)['sale-price'] != null){
-                $product_price = Product::find($cart->product_id)['sale-price'];
+            if(Product::find($cart->product_id)['sale_price'] != null){
+                $product_price = Product::find($cart->product_id)['sale_price'];
             }
 
             $total = $old_total - $product_price ;
@@ -93,11 +114,13 @@ class ProductController extends Controller
             $cart->save();
 
             return redirect(route('cart'));
-                
+            
         }else{
-            removeFromCart($cart_id);
+            Cart::destroy($cart_id);
+            return redirect(route('cart'));
         }
     }
+
     static function cartItems(){
         $userId = Session::get('user')['id'];
         return Cart::where('user_id', $userId)->count();
@@ -115,7 +138,7 @@ class ProductController extends Controller
 
     function removeFromCart($id){
         Cart::destroy($id);
-        return redirect(route('cart'));
+        return redirect()->route('cart');
     }
 
     function orderNow(){

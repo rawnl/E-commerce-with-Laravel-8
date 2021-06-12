@@ -20,7 +20,7 @@
                 <img src="{{asset('storage/images/'.$item['image'])}}" class="slider-image">
                 <div class="carousel-caption slider-text">
                     <h3>{{$item['name']}}</h3>
-                    <p>{{$item['short-description']}}</p>
+                    <p>{{$item['short_description']}}</p>
                 </div>
                 </a>
             </div>
@@ -48,12 +48,12 @@
                     <div class="caption">
                         <h3>{{$item['name']}}</h3>
                         
-                        @if ($item['sale-price'] != null )
-                            <p>Prix : <del> {{$item['price']}} DA </del> {{$item['sale-price']}} DA</p>                            
+                        @if ($item['sale_price'] != null )
+                            <p>Prix : <del> {{$item['price']}} DA </del> {{$item['sale_price']}} DA</p>                            
                         @else
                             <p>Prix : {{$item['price']}} DA </p>                        
                         @endif
-                        <p> {{$item['short-description']}}</p>
+                        <p> {{$item['short_description']}}</p>
                         <div class="d-flex justify-content-between text-right">                            
                             <form action="{{route('add_to_cart')}}" method="POST">
                             @csrf

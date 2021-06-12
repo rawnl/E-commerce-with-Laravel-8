@@ -15,7 +15,7 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $name = 'Gaming accessories';
+        $name = 'Accessoires Gaming';
         $slug = Str::slug($name);
         DB::table('categories')->insert(
             [

@@ -66,6 +66,7 @@ Route::get('/unblockUser/{id}', [UserController::class, 'unblockUser'])->name('u
 
 Route::get('decrease-quantity/{id}', [ProductController::class, 'decreaseQty'])->name('decrease-quantity');
 
+Route::get('increase-quantity/{id}', [ProductController::class, 'increaseQty'])->name('increase-quantity');
 
 //Route::get('displayImage/{filename}', [ProductController::class, 'displayImage'])->name('displayImage');
 

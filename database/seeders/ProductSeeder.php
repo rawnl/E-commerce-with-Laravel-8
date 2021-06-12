@@ -21,9 +21,9 @@ class ProductSeeder extends Seeder
                 'slug'=> Str::slug('Manette PS4 - Red'),
                 'price'=>'22000',
                 'SKU'=>'ps4-manette',
-                'short-description' => "Manette de Jeu Bluetooth sans Fil pour Playstation 4 avec câble USB Compatible avec Windows PC-Red",
+                'short_description' => "Manette de Jeu Bluetooth sans Fil pour Playstation 4 avec câble USB Compatible avec Windows PC-Red",
                 'description'=>"Compatible avec la console PS4 et PC. Si vous souhaitez connecter votre contrôleur à l'ordinateur, vous devez utiliser un câble micro-port pour vous connecter, ou l'acheteur dispose d'un récepteur Bluetooth, vous pouvez utiliser le récepteur Bluetooth pour connecter ce contrôleur sans fil.",
-                'stock-status'=>'instock',
+                'stock_status'=>'instock',
                 'quantity'=>14,
                 'category_id'=>1,
             ]
