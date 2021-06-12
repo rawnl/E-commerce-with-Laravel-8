@@ -1,7 +1,7 @@
 @extends('master')
 @section('content')
 <div class="product-class">
-    <div class="catalogue-wraper">
+    <div class="catalogue-wraper d-flex justify-content-center">
         <h3>Contenu du panier </h3>
         @if ($products!=null)
             <br>
@@ -23,13 +23,21 @@
                 <div class="col-sm-3">
                     <h3>{{$item->name}}</h3>
                     <p>Prix : {{$item->price}} DA</p>
-                    <p>{{$item->description}}</p>
+                    <p>Total : {{$item->total}} DA</p>
                 </div>
-                
+
                 <div class="col-sm-3">
-                    <p class="text-right">
+
+                    <div class="btn-group-vertical" role="group" aria-label="...">
+                        <a href="#" class="btn btn-default"><span class="dropup"><span class="caret"></span></span></a>
+                        <p></p>
+                        <p class="text-center">{{$item->quantity}}</p>
+                        <p></p>
+                        <a href="{{ route('decrease-quantity', ['id' => $item->cart_id ]) }} " type="button" class="btn btn-default"><span class="caret"></span></a>
+                        <br>
                         <a href="remove_from_cart/{{$item->cart_id}}" class="btn btn-danger" role="button">Retirer du panier</a>
-                    </p>
+                    </div>
+    
                 </div>
             </div>
             

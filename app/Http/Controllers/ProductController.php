@@ -28,23 +28,31 @@ class ProductController extends Controller
 
     function addToCart(Request $request){
         if($request->session()->has('user')){
+                            
             $cart = DB::table('carts')
                         ->where('user_id', $request->session()->get('user')['id'] )
                         ->where('product_id', $request->product_id )
                         ->first();
+
+            $total = $cart->total + Product::find($request->product_id)['price'];
+            
+            if(Product::find($request->product_id)['sale-price'] != null){
+                $total = $cart->total + Product::find($request->product_id)['sale-price'];
+            }
 
             if(!is_null($cart)){
                 $Qt = $cart->quantity + 1;
                 $cart = DB::table('carts')
                                 ->where('user_id', $request->session()->get('user')['id'] )
                                 ->where('product_id', $request->product_id )
-                                ->update(['quantity' => $Qt]);
+                                ->update(['quantity' => $Qt, 'total' => $total]);
             }else{
                 $cart = new Cart();
                 $cart->user_id = $request->session()->get('user')['id'];
                 $cart->product_id = $request->product_id; 
                 $cart->quantity=1;
-                $cart->total=Product::find($request->product_id)['price'];     
+                //$cart->total=Product::find($request->product_id)['price'];     
+                $cart->total = $total;
                 $cart->save();
             }
             return redirect(route('home'));
@@ -52,7 +60,39 @@ class ProductController extends Controller
             return redirect(route('login'));
         }
     }
+/*
+    function increaseQty($cart_id){
+        $cart = Cart::find($cart_id);
+        $Qt = $cart->quantity + 1;
+        Cart::update($cart_id, $Qt);
+    }
+*/
+    function decreaseQty($cart_id){
+        
+        $cart = Cart::find($cart_id);
 
+        if($cart->quantity > 1){
+
+            $Qt = $cart->quantity - 1;
+            $old_total = $cart->total;
+            $product_price = Product::find($cart->product_id)['price'];
+            
+            if(Product::find($cart->product_id)['sale-price'] != null){
+                $product_price = Product::find($cart->product_id)['sale-price'];
+            }
+
+            $total = $old_total - $product_price ;
+            
+            $cart->quantity = $Qt;
+            $cart->total = $total;
+            $cart->save();
+
+            return redirect(route('cart'));
+                
+        }else{
+            removeFromCart($cart_id);
+        }
+    }
     static function cartItems(){
         $userId = Session::get('user')['id'];
         return Cart::where('user_id', $userId)->count();
@@ -63,7 +103,7 @@ class ProductController extends Controller
         $products = DB::table('carts')
                     ->join('products', 'carts.product_id', '=', 'products.id')
                     ->where('carts.user_id', $userId)
-                    ->select('products.*', 'carts.id as cart_id')
+                    ->select('products.*', 'carts.id as cart_id', 'carts.quantity as quantity', 'carts.total as total')
                     ->get();
         return view('cart', ['products'=>$products]);
     }
