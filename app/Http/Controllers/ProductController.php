@@ -28,19 +28,25 @@ class ProductController extends Controller
 
     function addToCart(Request $request){
         if($request->session()->has('user')){
-                            
+        
+            $product_price = Product::find($request->product_id)['price'];
+            
+            if(Product::find($request->product_id)['sale-price'] != null){
+                $product_price = Product::find($request->product_id)['sale-price'];
+            }
+
             $cart = DB::table('carts')
                         ->where('user_id', $request->session()->get('user')['id'] )
                         ->where('product_id', $request->product_id )
                         ->first();
 
-            $total = $cart->total + Product::find($request->product_id)['price'];
-            
-            if(Product::find($request->product_id)['sale-price'] != null){
-                $total = $cart->total + Product::find($request->product_id)['sale-price'];
-            }
-
             if(!is_null($cart)){
+                $total = $cart->total + $product_price;
+  /*          
+                if(Product::find($request->product_id)['sale-price'] != null){
+                    $total = $cart->total + Product::find($request->product_id)['sale-price'];
+                }
+*/
                 $Qt = $cart->quantity + 1;
                 $cart = DB::table('carts')
                                 ->where('user_id', $request->session()->get('user')['id'] )
@@ -51,8 +57,7 @@ class ProductController extends Controller
                 $cart->user_id = $request->session()->get('user')['id'];
                 $cart->product_id = $request->product_id; 
                 $cart->quantity=1;
-                //$cart->total=Product::find($request->product_id)['price'];     
-                $cart->total = $total;
+                $cart->total = $product_price;
                 $cart->save();
             }
             return redirect(route('home'));

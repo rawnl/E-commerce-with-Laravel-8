@@ -17,14 +17,14 @@ class ProductSeeder extends Seeder
     {
         DB::table('products')->insert(
             [
-                'name'=>'Xbox Wireless Controller - Black',
-                'slug'=> Str::slug('Xbox Wireless Controller - Black'),
-                'price'=>'20000',
-                'SKU'=>'xbox-manette',
-                'short-description' => "Disponible à un prix inférieur auprès d'autres vendeurs qui n'offrent peut-être pas la livraison Prime gratuite.",
-                'description'=>"Découvrez le confort et la sensation améliorés de la nouvelle manette sans fil Xbox, dotée d'un design élégant et profilé et d'une prise texturée. Profitez d'un mappage de boutons personnalisé et d'une portée sans fil jusqu'à deux fois supérieure. Branchez n'importe quel casque compatible avec la prise casque stéréo 3,5 mm. Et avec la technologie Bluetooth, jouez à vos jeux préférés sur les PC et tablettes Windows 10. Mappage des boutons disponible via l'application Accessoires Xbox. Portée par rapport aux manettes précédentes avec la Xbox One S.",
+                'name'=>'Manette PS4 - Red',
+                'slug'=> Str::slug('Manette PS4 - Red'),
+                'price'=>'22000',
+                'SKU'=>'ps4-manette',
+                'short-description' => "Manette de Jeu Bluetooth sans Fil pour Playstation 4 avec câble USB Compatible avec Windows PC-Red",
+                'description'=>"Compatible avec la console PS4 et PC. Si vous souhaitez connecter votre contrôleur à l'ordinateur, vous devez utiliser un câble micro-port pour vous connecter, ou l'acheteur dispose d'un récepteur Bluetooth, vous pouvez utiliser le récepteur Bluetooth pour connecter ce contrôleur sans fil.",
                 'stock-status'=>'instock',
-                'quantity'=>4,
+                'quantity'=>14,
                 'category_id'=>1,
             ]
         );
