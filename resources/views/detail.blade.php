@@ -11,9 +11,18 @@
             <h2>{{$product['name']}}</h2>
             <h1>{{$product['price']}} DA</h3>
             <p>Catégorie: {{$product['category']}}</p>
-            <p>Quantité: {{$product['quantity']}}</p>
-            <p>Description: <br> {{$product['description']}}</p>
             
+            @if($product['stock_status'] == "instock")
+                <p>Status:  En stock  </p> 
+                <p>Quantité: {{$product['quantity']}}</p>
+            @else
+                <p>Status:  Diponible prochainement</p>
+                <button class="btn btn-info">réserver</button>
+            @endif
+            
+            <p>Description: <br> {{$product['short_description']}}</p>
+            <p>Détails: <br> {{$product['description']}}</p>
+
             <form action="{{route('add_to_cart')}}" method="POST">
             @csrf
                 <input type="hidden" name="product_id" value="{{$product['id']}}">

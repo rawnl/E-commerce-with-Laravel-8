@@ -13,8 +13,7 @@ class UserController extends Controller
         $user = User::where(['email'=>$request->email])->first();
         
         if(!$user || !Hash::check($request->password, $user->password)){
-            return 'Email ou Mot de passe incorrect';
-            //return back()->With('error', 'Email ou mot de passe invalide'); //->with('errors', 'Email ou Mot de passe incorrect');
+            return back()->With('error', 'Email ou mot de passe invalide'); //->with('errors', 'Email ou Mot de passe incorrect');
         }else{
             $request->session()->put('user',$user);
             //return redirect('/');

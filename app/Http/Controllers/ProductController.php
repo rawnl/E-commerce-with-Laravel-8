@@ -113,11 +113,11 @@ class ProductController extends Controller
             $cart->total = $total;
             $cart->save();
 
-            return redirect(route('cart'));
-            
+            return redirect(route('cart'))->with('success','Quantité décrémentée');
+
         }else{
             Cart::destroy($cart_id);
-            return redirect(route('cart'));
+            return redirect(route('cart'))->with('error','Article supprimé du panier');;
         }
     }
 
