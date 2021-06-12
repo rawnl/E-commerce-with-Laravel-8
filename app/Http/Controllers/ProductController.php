@@ -26,14 +26,14 @@ class ProductController extends Controller
         return view('search', ['result'=>$result]);
     }
 
-    function addToCart($id){
-        //$request->session()->has('user')
-        if(Session::has('user')){
+    function addToCart(Request $request){
+        //Session::has('user')
+        if($request->session()->has('user')){
             $cart = new Cart();
-            $cart->user_id=Session::get('user')['id']; //$request->session()->get('user')['id'];
-            $cart->product_id=$id;//$request->product_id;
+            $cart->user_id = $request->session()->get('user')['id']; //Session::get('user')['id'];
+            $cart->product_id = $request->product_id; //$id;
             $cart->quantity=1;
-            $cart->total=Product::find($id)['price'];//Product::find($request->product_id)['price'];
+            $cart->total=Product::find($request->product_id)['price']; //Product::find($id)['price'];//
             $cart->save();
             return redirect(route('home'));
         }else{
