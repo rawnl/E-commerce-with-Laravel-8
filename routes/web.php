@@ -68,6 +68,8 @@ Route::get('decrease-quantity/{id}', [ProductController::class, 'decreaseQty'])-
 
 Route::get('increase-quantity/{id}', [ProductController::class, 'increaseQty'])->name('increase-quantity');
 
+Route::post('/addCategory', [ProductController::class, 'addCategory'])->name('addCategory');
+
 //Route::get('displayImage/{filename}', [ProductController::class, 'displayImage'])->name('displayImage');
 
 /*

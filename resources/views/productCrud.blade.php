@@ -40,7 +40,13 @@
             <p>
               <!-- Button trigger modal -->
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalScrollable">
-                Ajouter un nouveau produit
+                Nouveau Produit
+              </button>
+            </p> 
+
+            <p>
+              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addCategoryModalScrollable">
+                Nouvelle Catégorie
               </button>
             </p> 
           </div>
@@ -54,7 +60,7 @@
                 <th>Description</th>
                 <th>Quantité</th>
                 <th>Actions</th>
-            </tr>
+              </tr>
             </thead>
             <tbody>
                 @if ($products != null)
@@ -243,6 +249,36 @@
     </div>
   </div>
 </div>
+
+<!-- New Category Modal -->
+<div class="modal fade" id="addCategoryModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">Nouveau Produit</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <form action="{{route('addCategory')}}" method="POST" enctype="multipart/form-data">
+        <div class="modal-body">
+          @csrf
+              <div class="col-12">
+                <label for="category" class="form-label">Nom de la catégorie</label>
+                <input type="text" class="form-control" name="category" id="category" placeholder="">
+              </div>              
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuuler</button>
+          <button type="submit" class="btn btn-primary">Valider</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
 
 <script>
 

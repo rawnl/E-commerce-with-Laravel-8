@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Category;
 use Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -312,6 +313,16 @@ class ProductController extends Controller
         }
         
         $product->save();
+        
+        return redirect()->back(); 
+    }
+
+    function addCategory(Request $request){
+        //$category = Category::where('name', $request->category)->get();
+        $category = new Category();
+        $category->name =  $request->category ;
+        $category->slug =  Str::slug($request->category) ;
+        $category->save();
         
         return redirect()->back(); 
     }
