@@ -19,7 +19,14 @@ class ProductController extends Controller
     }
 
     function detail($id){
-        $product = Product::find($id);
+        //$product = Product::find($id);
+
+        $product = DB::table('products')
+                    ->join('categories', 'products.category_id', '=', 'categories.id')
+                    ->where('products.id', $id)
+                    ->select('products.*', 'categories.name as category_name')
+                    ->get();
+
         return view('detail', ['product'=>$product]);
     }
 
