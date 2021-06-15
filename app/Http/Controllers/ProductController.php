@@ -8,6 +8,8 @@ use App\Models\Cart;
 use App\Models\Order;
 use Session;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
 
 class ProductController extends Controller
 {
@@ -248,12 +250,28 @@ class ProductController extends Controller
     function addProduct(Request $request){
 
         $product = new Product();
-        $product->name= $request->input('name');;
+        $product->name = $request->input('name');
+        $product->slug = Str::slug($product->name);
+        $product->SKU = $product->name;
         $product->price = $request->input('price');
-        $product->category = $request->input('category');
+        
+        if($request->input('sale_price') == null){
+            $product->sale_price = $request->input('price');
+        }else{
+            $product->sale_price = $request->input('sale_price');
+        }
+       
+        $product->category_id = $request->input('category');
         $product->description = $request->input('description');
+        $product->short_description = $request->input('short_description');
         $product->quantity = $request->input('quantity');
         
+        if($product->quantity > 0){
+            $product->stock_status = 'instock';
+        }else{
+            $product->stock_status = 'outofstock';
+        }    
+
         $imageName = $request->file('image')->getClientOriginalName();
         $request->file('image')->storeAs('public/images',$imageName);
         

@@ -112,39 +112,49 @@
         <div class="modal-body">
           @csrf
                 <div class="col-12">
-                    <label for="nom" class="form-label">Nom de produit</label>
+                    <label for="name" class="form-label">Nom de produit</label>
                     <input type="text" class="form-control" name="name" id="name" placeholder="">
                 </div>
 
                 <div class="col-12">
-                    <label for="prenom" class="form-label">Prix</label>
+                    <label for="price" class="form-label">Prix</label>
                     <input type="text" class="form-control" name="price" id="price" placeholder="">
                 </div>
 
                 <div class="col-12">
-                  <label for="prenom" class="form-label">Catégorie</label>
-                  <input type="text" class="form-control" name="category" id="category" placeholder="">
-              </div>
+                  <label for="sale_price" class="form-label">Prix de vente</label>
+                  <input type="text" class="form-control" name="sale_price" id="sale_price" placeholder="">
+                </div>
 
                 <div class="col-12">
-                    <label for="inputEmail4" class="form-label">Quantité</label>
+                  <label for="category" class="form-label">Catégorie</label>
+                  <input type="text" class="form-control" name="category" id="category" placeholder="">
+                </div>
+
+                <div class="col-12">
+                    <label for="quantity" class="form-label">Quantité</label>
                     <input type="text" class="form-control" name='quantity' id="quantity" placeholder="">
                 </div>
                 
                 <div class="col-12">
-                    <label for="password" class="form-label">Description</label>
-                    <textarea type="password" class="form-control" name="description" id="description" placeholder=""></textarea>
+                  <label for="short_description" class="form-label">Petite description</label>
+                  <textarea type="text" class="form-control" name="short_description" id="short_description" placeholder=""></textarea>
                 </div>
 
                 <div class="col-12">
-                  <label for="inputEmail4" class="form-label">Image</label>
+                    <label for="description" class="form-label">Description</label>
+                    <textarea type="text" class="form-control" name="description" id="description" placeholder=""></textarea>
+                </div>
+
+                <div class="col-12">
+                  <label for="image" class="form-label">Image</label>
                   <input type="file" class="form-control-file" name='image' id="image" placeholder="">
-              </div>
+                </div>
               
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuuler</button>
-          <button type="submit" class="btn btn-primary">Valider</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary">Ajouter</button>
         </div>
       </form>
 
