@@ -1,15 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Category;
+use App\Models\Subscription;
 use Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SubscriptionMail;
 
 
 class ProductController extends Controller
@@ -303,6 +305,24 @@ class ProductController extends Controller
      
         if($product->quantity > 0){
             $product->stock_status = 'instock';
+            //notifySubscribers();
+            $subscriptions =  DB::table('subscriptions')
+                                ->where('status', '=', 'NotNotified')
+                                ->join('users', 'subscriptions.user_id', '=', 'users.id')
+                                ->join('products', 'subscriptions.product_id', '=', 'products.id')
+                                ->select('users.nom', 'users.prenom', 'users.email', 
+                                        'products.name as product_name', 'products.price', 'products.description', 'products.category_id')
+                                ->get();
+            foreach($subscriptions as $subscription){
+                $data = [
+                    'email' => $subscription->email,
+                    'product_name' => $subscription->product_name,
+                    'product_price' => $subscription->price
+                ];
+
+                Mail::to($subscription->email)->send(new SubscriptionMail($data));
+            }
+            //end notify
         }else{
             $product->stock_status = 'outofstock';
         } 
@@ -326,5 +346,35 @@ class ProductController extends Controller
         $category->save();
         
         return redirect()->back(); 
+    }
+
+    function subscribeToWaitingList(Request $request){
+        
+        $userId = Session::get('user')['id'];
+        $subscription = new Subscription();
+        $subscription->user_id = $userId;
+        $subscription->product_id = $request->input('product_id');
+        $subscription->save();
+       
+        return redirect()->back();
+    }
+
+    public function notifySubscribers(){
+        $subscriptions =  DB::table('subscriptions')
+                    ->where('status', '=', 'NotNotified')
+                    ->join('users', 'subscriptions.user_id', '=', 'users.id')
+                    ->join('products', 'subscriptions.product_id', '=', 'products.id')
+                    ->select('users.nom', 'users.prenom', 'users.email', 
+                            'products.name as product_name', 'products.price', 'products.description', 'products.category')
+                    ->get();
+        foreach($subscriptions as $subscription){
+            $data = [
+                'email' => $subscription->email,
+                'product_name' => $subscription->product_name,
+                'products_price' => $subscription->price
+            ];
+
+            Mail::to($data->email)->send(new SubscriptionMail($data));
+        }
     }
 }

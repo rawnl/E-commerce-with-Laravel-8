@@ -70,6 +70,8 @@ Route::get('increase-quantity/{id}', [ProductController::class, 'increaseQty'])-
 
 Route::post('/addCategory', [ProductController::class, 'addCategory'])->name('addCategory');
 
+Route::post('/subscribe_wait_list', [ProductController::class, 'subscribeToWaitingList'])->name('subscribe_wait_list');
+
 //Route::get('displayImage/{filename}', [ProductController::class, 'displayImage'])->name('displayImage');
 
 /*
