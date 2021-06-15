@@ -20,6 +20,7 @@
                     <img class="catalogue-img" src="{{asset('storage/images/'.$item->image)}}" alt="...">
                 </div>  
 
+                <input type="hidden" id="{{$item->id}}" value="{{$item->quantity}}">
                 <div class="col-sm-3">
                     <h3>{{$item->name}}</h3>
                     <p>Prix : {{$item->price}} DA</p>
@@ -31,7 +32,7 @@
                     <div class="btn-group-vertical" role="group" aria-label="...">
                         <a href="{{ route('increase-quantity', ['id' => $item->cart_id ]) }} " class="btn btn-default"><span class="dropup"><span class="caret"></span></span></a>
                         <p></p>
-                        <p class="text-center">{{$item->quantity}}</p>
+                        <p class="text-center">{{$item->cart_quantity}}</p>
                         <p></p>
                         <a href="{{ route('decrease-quantity', ['id' => $item->cart_id ]) }} " type="button" class="btn btn-default"><span class="caret"></span></a>
                         <br>

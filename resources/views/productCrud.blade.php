@@ -58,6 +58,7 @@
             </thead>
             <tbody>
                 @if ($products != null)
+                {{$count = 0 }}
                     @foreach ($products as $item)
                     <tr>
                         
@@ -69,7 +70,7 @@
                         <td>
                           
                           <div class="col-sm-4">
-                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#updateModal" onclick="update(this.id)" id="{{ $item->id }}">
+                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#updateModal" onclick="update(this.id)" id="{{ $count }}">
                               Modifier
                             </button>
                           </div>
@@ -84,6 +85,7 @@
                         
                         </td>
                     </tr>  
+                    {{$count++ }}
                     @endforeach                
                 @else
                     <p>Table vide</p>                
@@ -112,49 +114,39 @@
         <div class="modal-body">
           @csrf
                 <div class="col-12">
-                    <label for="name" class="form-label">Nom de produit</label>
+                    <label for="nom" class="form-label">Nom de produit</label>
                     <input type="text" class="form-control" name="name" id="name" placeholder="">
                 </div>
 
                 <div class="col-12">
-                    <label for="price" class="form-label">Prix</label>
+                    <label for="prenom" class="form-label">Prix</label>
                     <input type="text" class="form-control" name="price" id="price" placeholder="">
                 </div>
 
                 <div class="col-12">
-                  <label for="sale_price" class="form-label">Prix de vente</label>
-                  <input type="text" class="form-control" name="sale_price" id="sale_price" placeholder="">
-                </div>
-
-                <div class="col-12">
-                  <label for="category" class="form-label">Catégorie</label>
+                  <label for="prenom" class="form-label">Catégorie</label>
                   <input type="text" class="form-control" name="category" id="category" placeholder="">
-                </div>
+              </div>
 
                 <div class="col-12">
-                    <label for="quantity" class="form-label">Quantité</label>
+                    <label for="inputEmail4" class="form-label">Quantité</label>
                     <input type="text" class="form-control" name='quantity' id="quantity" placeholder="">
                 </div>
                 
                 <div class="col-12">
-                  <label for="short_description" class="form-label">Petite description</label>
-                  <textarea type="text" class="form-control" name="short_description" id="short_description" placeholder=""></textarea>
+                    <label for="password" class="form-label">Description</label>
+                    <textarea type="password" class="form-control" name="description" id="description" placeholder=""></textarea>
                 </div>
 
                 <div class="col-12">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea type="text" class="form-control" name="description" id="description" placeholder=""></textarea>
-                </div>
-
-                <div class="col-12">
-                  <label for="image" class="form-label">Image</label>
+                  <label for="inputEmail4" class="form-label">Image</label>
                   <input type="file" class="form-control-file" name='image' id="image" placeholder="">
-                </div>
+              </div>
               
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-          <button type="submit" class="btn btn-primary">Ajouter</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuuler</button>
+          <button type="submit" class="btn btn-primary">Valider</button>
         </div>
       </form>
 
@@ -202,27 +194,37 @@
                     <input type="hidden" class="form-control" name="updateId" id="updateId" placeholder="">
                 </div>
                 <div class="col-12">
-                    <label for="nom" class="form-label">Nom de produit</label>
+                    <label for="updateName" class="form-label">Nom de produit</label>
                     <input type="text" class="form-control" name="updateName" id="updateName" placeholder="">
                 </div>
 
                 <div class="col-12">
-                    <label for="prenom" class="form-label">Prix</label>
+                    <label for="updatePrice" class="form-label">Prix</label>
                     <input type="text" class="form-control" name="updatePrice" id="updatePrice" placeholder="">
                 </div>
 
                 <div class="col-12">
-                  <label for="prenom" class="form-label">Catégorie</label>
+                  <label for="updateSalePrice" class="form-label">Prix de vente</label>
+                  <input type="text" class="form-control" name="updateSalePrice" id="updateSalePrice" placeholder="">
+              </div>
+
+                <div class="col-12">
+                  <label for="updateCategory" class="form-label">Catégorie</label>
                   <input type="text" class="form-control" name="updateCategory" id="updateCategory" placeholder="">
               </div>
 
                 <div class="col-12">
-                    <label for="inputEmail4" class="form-label">Quantité</label>
+                    <label for="updateQuantity" class="form-label">Quantité</label>
                     <input type="text" class="form-control" name='updateQuantity' id="updateQuantity" placeholder="">
                 </div>
                 
                 <div class="col-12">
-                    <label for="password" class="form-label">Description</label>
+                  <label for="updateShortDescription" class="form-label">Petite description</label>
+                  <input type="text" class="form-control" name="updateShortDescription" id="updateShortDescription" placeholder="">
+                </div>
+
+                <div class="col-12">
+                    <label for="updateDescription" class="form-label">Description</label>
                     <textarea class="form-control" name="updateDescription" id="updateDescription" placeholder=""></textarea>
                 </div>
 
@@ -253,13 +255,15 @@
     
     var produits = {!! json_encode($products->toArray(), JSON_HEX_TAG) !!};
     
-    var produit = produits[id-1] ;
+    var produit = produits[id] ;
 
-    document.getElementById("updateId").setAttribute("value", id );
+    document.getElementById("updateId").setAttribute("value", produit.id );
     document.getElementById("updateName").setAttribute("value", produit.name);
     document.getElementById("updatePrice").setAttribute("value", produit.price );
+    document.getElementById("updateSalePrice").setAttribute("value", produit.sale_price );
     document.getElementById("updateQuantity").setAttribute("value", produit.quantity );
-    document.getElementById("updateCategory").setAttribute("value", produit.category);    
+    document.getElementById("updateCategory").setAttribute("value", produit.category_id);    
+    document.getElementById("updateShortDescription").setAttribute("value", produit.short_description);
     document.getElementById("updateDescription").innerHTML = produit.description;
     document.getElementById("updateImage").setAttribute("value", produit.image );
 

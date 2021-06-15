@@ -19,8 +19,6 @@ class ProductController extends Controller
     }
 
     function detail($id){
-        //$product = Product::find($id);
-
         $product = DB::table('products')
                     ->join('categories', 'products.category_id', '=', 'categories.id')
                     ->where('products.id', $id)
@@ -51,11 +49,7 @@ class ProductController extends Controller
 
             if(!is_null($cart)){
                 $total = $cart->total + $product_price;
-  /*          
-                if(Product::find($request->product_id)['sale-price'] != null){
-                    $total = $cart->total + Product::find($request->product_id)['sale-price'];
-                }
-*/
+
                 $Qt = $cart->quantity + 1;
                 $cart = DB::table('carts')
                                 ->where('user_id', $request->session()->get('user')['id'] )
@@ -74,6 +68,7 @@ class ProductController extends Controller
             return redirect(route('login'));
         }
     }
+
     function increaseQty($cart_id){
         $cart = Cart::find($cart_id);     
         $product = Product::find($cart->product_id);
@@ -101,7 +96,6 @@ class ProductController extends Controller
             //send msg no element left
             //removeFromCart($cart_id);
         }
-
     }
 
     function decreaseQty($cart_id){        
@@ -140,7 +134,7 @@ class ProductController extends Controller
         $products = DB::table('carts')
                     ->join('products', 'carts.product_id', '=', 'products.id')
                     ->where('carts.user_id', $userId)
-                    ->select('products.*', 'carts.id as cart_id', 'carts.quantity as quantity', 'carts.total as total')
+                    ->select('products.*', 'carts.id as cart_id', 'carts.quantity as cart_quantity', 'carts.total as total')
                     ->get();
         return view('cart', ['products'=>$products]);
     }
@@ -293,10 +287,24 @@ class ProductController extends Controller
 
         $product->name= $request->input('updateName');;
         $product->price = $request->input('updatePrice');
+
+        if($request->input('updateSalePrice') == null){
+            $product->sale_price = $request->input('updatePrice');
+        }else{
+            $product->sale_price = $request->input('updateSalePrice');
+        }
+
         $product->category_id = (int)$request->input('updateCategory');
+        $product->short_description = $request->input('updateShortDescription');
         $product->description = $request->input('updateDescription');
         $product->quantity = $request->input('updateQuantity');
      
+        if($product->quantity > 0){
+            $product->stock_status = 'instock';
+        }else{
+            $product->stock_status = 'outofstock';
+        } 
+
         if($request->hasFile('updateImage')){
             $imageName = $request->file('updateImage')->getClientOriginalName();
             $request->file('updateImage')->storeAs('public/images',$imageName);
