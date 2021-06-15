@@ -192,7 +192,8 @@ class ProductController extends Controller
 
     function products(){
         $products = Product::all();
-        return view('productCrud', ['products'=>$products]);
+        $categories = Category::all();
+        return view('productCrud', ['products'=>$products, 'categories' => $categories]);
     }
 
     function orders(){
@@ -263,9 +264,9 @@ class ProductController extends Controller
             $product->sale_price = $request->input('sale_price');
         }
        
-        $product->category_id = $request->input('category');
+        $product->category_id = (int)$request->input('category');
         $product->description = $request->input('description');
-        $product->short_description = $request->input('short_description');
+        $product->short_description = $request->input('shortDescription');
         $product->quantity = $request->input('quantity');
         
         if($product->quantity > 0){
@@ -286,7 +287,7 @@ class ProductController extends Controller
     function editProduct(Request $request){
         $product = Product::find($request->input('updateId'));
 
-        $product->name= $request->input('updateName');;
+        $product->name= $request->input('updateName');
         $product->price = $request->input('updatePrice');
 
         if($request->input('updateSalePrice') == null){

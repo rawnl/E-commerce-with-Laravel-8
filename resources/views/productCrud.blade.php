@@ -128,17 +128,36 @@
                     <label for="prenom" class="form-label">Prix</label>
                     <input type="text" class="form-control" name="price" id="price" placeholder="">
                 </div>
-
+                
                 <div class="col-12">
-                  <label for="prenom" class="form-label">Catégorie</label>
-                  <input type="text" class="form-control" name="category" id="category" placeholder="">
-              </div>
+                  <label for="updateSalePrice" class="form-label">Prix de vente</label>
+                  <input type="text" class="form-control" name="updateSalePrice" id="updateSalePrice" placeholder="">
+                </div>
+
+                <br>
+                <div class="col-12 dropdown">
+                 <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categorie<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                      @foreach ($categories as $category)
+                        <li>
+                          <input type="radio" id="{{$category['name']}}" value="{{$category['id']}}" name="category"><span> {{$category['name']}}</span><br>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                      @endforeach
+                  </ul>
+                </div>
+                <br>
 
                 <div class="col-12">
                     <label for="inputEmail4" class="form-label">Quantité</label>
                     <input type="text" class="form-control" name='quantity' id="quantity" placeholder="">
                 </div>
                 
+                <div class="col-12">
+                  <label for="shortDescription" class="form-label">Petite description</label>
+                  <input type="text" class="form-control" name="shortDescription" id="shortDescription" placeholder="">
+                </div>
+
                 <div class="col-12">
                     <label for="password" class="form-label">Description</label>
                     <textarea type="password" class="form-control" name="description" id="description" placeholder=""></textarea>
@@ -213,12 +232,19 @@
                   <label for="updateSalePrice" class="form-label">Prix de vente</label>
                   <input type="text" class="form-control" name="updateSalePrice" id="updateSalePrice" placeholder="">
               </div>
-
-                <div class="col-12">
-                  <label for="updateCategory" class="form-label">Catégorie</label>
-                  <input type="text" class="form-control" name="updateCategory" id="updateCategory" placeholder="">
-              </div>
-
+                <br>
+                <div class="col-12 dropdown">
+                 <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categorie<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                      @foreach ($categories as $category)
+                        <li>
+                          <input type="radio" id="{{$category['name']}}" value="{{$category['id']}}" name="updateCategory"><span> {{$category['name']}}</span><br>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                      @endforeach
+                  </ul>
+                </div>
+                <br>
                 <div class="col-12">
                     <label for="updateQuantity" class="form-label">Quantité</label>
                     <input type="text" class="form-control" name='updateQuantity' id="updateQuantity" placeholder="">
@@ -267,7 +293,7 @@
               <div class="col-12">
                 <label for="category" class="form-label">Nom de la catégorie</label>
                 <input type="text" class="form-control" name="category" id="category" placeholder="">
-              </div>              
+              </div>  
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuuler</button>
@@ -290,15 +316,17 @@
   function update(id){
     
     var produits = {!! json_encode($products->toArray(), JSON_HEX_TAG) !!};
-    
     var produit = produits[id] ;
+
+    var categories = {!! json_encode($categories->toArray(), JSON_HEX_TAG) !!};
+    var category = categories[produits[id].category_id];
 
     document.getElementById("updateId").setAttribute("value", produit.id );
     document.getElementById("updateName").setAttribute("value", produit.name);
     document.getElementById("updatePrice").setAttribute("value", produit.price );
     document.getElementById("updateSalePrice").setAttribute("value", produit.sale_price );
     document.getElementById("updateQuantity").setAttribute("value", produit.quantity );
-    document.getElementById("updateCategory").setAttribute("value", produit.category_id);    
+    $('input[name=updateCategory][value="' + produit.category_id + '"]').prop('checked', true)   
     document.getElementById("updateShortDescription").setAttribute("value", produit.short_description);
     document.getElementById("updateDescription").innerHTML = produit.description;
     document.getElementById("updateImage").setAttribute("value", produit.image );
