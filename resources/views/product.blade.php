@@ -55,13 +55,25 @@
                         @endif
                         <p> {{$item['short_description']}}</p>
                         <div class="d-flex justify-content-between text-right">                            
-                            <form action="{{route('add_to_cart')}}" method="POST">
-                            @csrf
-                                <input type="hidden" name="product_id" value="{{$item['id']}}">
-                                <p class="text-right">
-                                <button class="btn btn-primary">Ajouter au panier</button> 
-                                </p>
-                            </form> 
+ 
+                            @if ($item['stock_status'] === "instock")
+                                <form action="{{route('add_to_cart')}}" method="POST">
+                                    @csrf
+                                        <input type="hidden" name="product_id" value="{{$item['id']}}">
+                                        <p class="text-right">
+                                        <button class="btn btn-primary">Ajouter au panier</button> 
+                                        </p>
+                                </form> 
+                            @else
+                                <form action="{{route('subscribe_wait_list')}}" method="POST">
+                                    @csrf
+                                        <input type="hidden" name="product_id" value="{{$item['id']}}">
+                                        <p class="text-right">
+                                        <button class="btn btn-primary">S'inscrire à la liste d'attente</button> 
+                                        </p>
+                                </form> 
+                            @endif
+
                            <a href="detail/{{$item['id']}}" class="btn btn-default" role="button">Détails</a>
                         </div>
 

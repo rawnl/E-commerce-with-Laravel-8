@@ -301,31 +301,30 @@ class ProductController extends Controller
         $product->category_id = (int)$request->input('updateCategory');
         $product->short_description = $request->input('updateShortDescription');
         $product->description = $request->input('updateDescription');
-        $product->quantity = $request->input('updateQuantity');
+        
      
-        if($product->quantity > 0){
-            $product->stock_status = 'instock';
-            //notifySubscribers();
-            $subscriptions =  DB::table('subscriptions')
-                                ->where('status', '=', 'NotNotified')
-                                ->join('users', 'subscriptions.user_id', '=', 'users.id')
-                                ->join('products', 'subscriptions.product_id', '=', 'products.id')
-                                ->select('users.nom', 'users.prenom', 'users.email', 
-                                        'products.name as product_name', 'products.price', 'products.description', 'products.category_id')
-                                ->get();
-            foreach($subscriptions as $subscription){
-                $data = [
-                    'email' => $subscription->email,
-                    'product_name' => $subscription->product_name,
-                    'product_price' => $subscription->price
-                ];
-
-                Mail::to($subscription->email)->send(new SubscriptionMail($data));
+        if($request->input('updateQuantity') > 0){
+            if($product->stock_status === 'outofstock'){
+                $product->stock_status = 'instock';
+            
+                $subscriptions =  DB::table('subscriptions')
+                                    ->where('product_id', '=', $product->id )
+                                    ->where('status', '=', 'NotNotified')
+                                    ->join('users', 'subscriptions.user_id', '=', 'users.id')
+                                    ->join('products', 'subscriptions.product_id', '=', 'products.id')
+                                    ->select('subscriptions.id as subscription_id','users.nom', 'users.prenom', 'users.email', 
+                                            'products.name as product_name', 'products.sale_price', 
+                                            'products.description', 'products.category_id',
+                                            'products.image')
+                                    ->get();
+    
+                ProductController::notifySubscribers($subscriptions);    
             }
-            //end notify
         }else{
             $product->stock_status = 'outofstock';
         } 
+        
+        $product->quantity = $request->input('updateQuantity');
 
         if($request->hasFile('updateImage')){
             $imageName = $request->file('updateImage')->getClientOriginalName();
@@ -359,22 +358,26 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
-    public function notifySubscribers(){
-        $subscriptions =  DB::table('subscriptions')
-                    ->where('status', '=', 'NotNotified')
-                    ->join('users', 'subscriptions.user_id', '=', 'users.id')
-                    ->join('products', 'subscriptions.product_id', '=', 'products.id')
-                    ->select('users.nom', 'users.prenom', 'users.email', 
-                            'products.name as product_name', 'products.price', 'products.description', 'products.category')
-                    ->get();
+    public static function notifySubscribers($subscriptions){
         foreach($subscriptions as $subscription){
+        
             $data = [
+                'nom' => $subscription->nom,
+                'prenom' => $subscription->prenom,
                 'email' => $subscription->email,
                 'product_name' => $subscription->product_name,
-                'products_price' => $subscription->price
+                'product_price' => $subscription->sale_price,
+                'product_description' => $subscription->description,
+                'product_image'=> $subscription->image
             ];
 
-            Mail::to($data->email)->send(new SubscriptionMail($data));
+            Mail::to($subscription->email)->send(new SubscriptionMail($data));
+
+            $item = Subscription::find($subscription->subscription_id);
+            $item->status = "Notified";
+            $item->save();
+
         }
+                    
     }
 }
