@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PaymentController;
 
 Route::get('/', [ProductController::class, 'index'])->name('home');
 
@@ -71,6 +72,10 @@ Route::get('increase-quantity/{id}', [ProductController::class, 'increaseQty'])-
 Route::post('/addCategory', [ProductController::class, 'addCategory'])->name('addCategory');
 
 Route::post('/subscribe_wait_list', [ProductController::class, 'subscribeToWaitingList'])->name('subscribe_wait_list');
+
+Route::get('stripe', [PaymentController::class, 'stripe'])->name('stripe');
+
+Route::post('stripe', [PaymentController::class, 'stripePost'])->name('stripe.post');
 
 //Route::get('displayImage/{filename}', [ProductController::class, 'displayImage'])->name('displayImage');
 

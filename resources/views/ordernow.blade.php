@@ -33,8 +33,8 @@
 
             <div class="form-group col-sm-12">
                 <label for="payment_method" class="form-label">Méthode de paiement</label><br>
-                <input type="radio" value="en ligne" name="payment_method"><span> Paiement en ligne</span><br>
-                <input type="radio" value="à la livraison" name="payment_method"><span> Paiement à la livraison</span><br>
+                <input type="radio" value="en-ligne" name="payment_method"><span> Paiement en ligne</span><br>
+                <input type="radio" value="a-la-livraison" name="payment_method"><span> Paiement à la livraison</span><br>
             </div>
             
             <div class="form-group col-sm-12 text-right">

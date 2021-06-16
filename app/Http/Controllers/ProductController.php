@@ -159,6 +159,7 @@ class ProductController extends Controller
     function confirmOrder(Request $request){
         $userId = Session::get('user')['id'];
         $carts = Cart::where('user_id', $userId)->get();
+        /*
         foreach($carts as $cart){
             $order = new Order;
             $order->product_id = $cart['product_id'];
@@ -171,6 +172,10 @@ class ProductController extends Controller
             Cart::where('user_id', $userId)->delete();
         }
         return redirect(route('home'));
+        */
+        if($request->payment_method === 'en-ligne'){
+            return redirect(route('stripe'));
+        }
     }
 
     function myOrders(){
