@@ -64,7 +64,7 @@
             </thead>
             <tbody>
                 @if ($products != null)
-                {{$count = 0 }}
+                <!--{{$count = 0 }}-->
                     @foreach ($products as $item)
                     <tr>
                         
@@ -91,7 +91,7 @@
                         
                         </td>
                     </tr>  
-                    {{$count++ }}
+                    <!--{{$count++ }}-->
                     @endforeach                
                 @else
                     <p>Table vide</p>                

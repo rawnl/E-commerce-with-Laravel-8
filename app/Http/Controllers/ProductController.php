@@ -162,7 +162,7 @@ class ProductController extends Controller
     function confirmOrder(Request $request){
         $userId = Session::get('user')['id'];
         $carts = Cart::where('user_id', $userId)->get();
-        
+
         if($request->payment_method === 'en-ligne'){
             return view('stripe',['request' => $request] );
         }else{
@@ -210,9 +210,10 @@ class ProductController extends Controller
         $orders = DB::table('orders')
                     ->join('products', 'orders.product_id', '=', 'products.id')
                     ->join('users', 'orders.user_id', '=', 'users.id')
+                    ->join('categories', 'products.category_id', '=', 'categories.id')
                     ->select('orders.*', 
                             'users.nom', 'users.prenom', 'users.email', 
-                            'products.name', 'products.price', 'products.description', 'products.category')
+                            'products.name', 'products.price', 'products.description', 'products.category_id', 'categories.name as category_name')
                     ->get();
         return view('orders', ['orders'=>$orders]);
     }

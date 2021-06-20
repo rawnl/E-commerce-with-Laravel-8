@@ -89,7 +89,7 @@
                         <td>
                           <h4>{{$item->name}}</h4>
                           <p>Prix : {{$item->price}} DA</p>
-                          <p>Catégorie : {{$item->category}}</p>
+                          <p>Catégorie : {{$item->category_name}}</p>
                           <p>Description : {{$item->description}}</p>
                         </td>
                         
