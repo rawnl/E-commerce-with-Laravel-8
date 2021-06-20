@@ -17,10 +17,12 @@
 </head>
 <body>
     {{View::make('header')}}
+    
     @if (session('success'))
         <div class="alert alert-success alert-block">	
             <button type="button" class="close" data-dismiss="alert">×</button>	        
             <strong>{{ session('success') }}</strong>
+            <p>Hi there</p>
         </div>
     @endif
 

@@ -29,6 +29,7 @@
                    data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"
                    id="payment-form">
                    @csrf
+                   <input name="total" type='hidden' value="{{$request->total}}">
                    <div class='form-row row'>
                       <div class='col-xs-12 form-group required'>
                          <label class='control-label'>Nom (sur la carte)</label> 

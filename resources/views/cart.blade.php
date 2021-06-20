@@ -2,8 +2,14 @@
 @section('content')
 <div class="product-class">
     <div class="catalogue-wraper d-flex justify-content-center">
-        <h3>Contenu du panier </h3>
-        @if ($products!=null)
+        @if ($products->isEmpty())
+            <div class="row">
+                <div class="col-sm-3">
+                    <h4>Votre panier est vide</h4>
+                </div>
+            </div>
+        @else
+            <h3>Contenu du panier </h3>
             <br>
             <div class="row">    
                 <div class="col-sm-6">
@@ -38,17 +44,10 @@
                         <br>
                         <a href="remove_from_cart/{{$item->cart_id}}" class="btn btn-danger" role="button">Retirer du panier</a>
                     </div>
-    
+
                 </div>
             </div>
-            
-            @endforeach    
-        @else
-            <div class="row">
-                <div class="col-sm-3">
-                    <h4>Votre panier est vide</h4>
-                </div>
-            </div>
+            @endforeach
         @endif
 
         

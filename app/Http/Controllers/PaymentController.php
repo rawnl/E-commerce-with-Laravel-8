@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Stripe;
 use Session;
 
+use Illuminate\Support\Facades\DB;
+use App\Models\Cart;
+use App\Models\Order;
+
 class PaymentController extends Controller
 {
     public function stripe()
@@ -15,18 +19,39 @@ class PaymentController extends Controller
    
     public function stripePost(Request $request)
     {
-        /*$sk = env('STRIPE_SECRET');
-        dd($sk); */
+        $userId = Session::get('user')->id;
+        /*$total = DB::table('carts')
+                    ->join('products', 'carts.product_id', '=', 'products.id')
+                    ->where('carts.user_id', $userId)
+                    ->sum('products.price');*/
+        //(int) $request->total,
+        $amount = (int) $request->total;
+        //dd($amount);
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         Stripe\Charge::create ([
-                "amount" => 100 * 100,
-                "currency" => "usd",
+                "amount" => $amount, 
+                "currency" => "eur",
                 "source" => $request->stripeToken,
-                "description" => "This payment is tested purpose phpcodingstuff.com"
+                "description" => "This payment is tested purpose"
         ]);
-   
+
+        $carts = Cart::where('user_id', $userId)->get();
+        foreach($carts as $cart){
+            $order = new Order;
+            $order->product_id = $cart['product_id'];
+            $order->user_id = $cart['user_id'];
+            $order->status='en attente';
+            $order->payment_method = 'en-ligne';//$request->payment_method;
+            $order->payment_status = 'validé';
+            $order->address = 'user @ to fix'; //$request->address;
+            $order->save();
+            Cart::where('user_id', $userId)->delete();
+        }
+
         Session::flash('success', 'Payment successful!');
-           
-        return back();
+        
+        return redirect(route('home'));   
+        
+        //return back();
     }
 }

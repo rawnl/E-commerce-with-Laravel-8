@@ -77,20 +77,4 @@ Route::get('stripe', [PaymentController::class, 'stripe'])->name('stripe');
 
 Route::post('stripe', [PaymentController::class, 'stripePost'])->name('stripe.post');
 
-//Route::get('displayImage/{filename}', [ProductController::class, 'displayImage'])->name('displayImage');
 
-/*
-use App\Http\Controllers\MailController;
-Route::get('sendEmail', [MailController::class, 'sendEmail'])->name('sendEmail');
-*/
-
-/*
-Route::group(['middleware' => ['auth', 'type:USR']], function(){
-    Route::post('/add_to_cart', [ProductController::class, 'addToCart'])->name('add_to_cart');
-    Route::get('/remove_from_cart/{id}', [ProductController::class, 'removeFromCart'])->name('remove_from_cart');
-    Route::get('/order_now', [ProductController::class, 'orderNow'])->name('order_now');
-    Route::post('/confirm_order', [ProductController::class, 'confirmOrder'])->name('confirm_order');
-    Route::get('/myorders', [ProductController::class, 'myOrders'])->name('myorders');
-    Route::get('/cart', [ProductController::class, 'cart'])->name('cart');
-});
-*/

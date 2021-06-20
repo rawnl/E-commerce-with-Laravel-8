@@ -30,7 +30,7 @@
             <div class="form-group col-sm-12">
                 <textarea class="form-control" name="address" id="adress" placeholder="Votre adresse"></textarea>
             </div>
-
+            <input type="hidden" name="total" value="{{$total+500}}" name="total">
             <div class="form-group col-sm-12">
                 <label for="payment_method" class="form-label">Méthode de paiement</label><br>
                 <input type="radio" value="en-ligne" name="payment_method"><span> Paiement en ligne</span><br>

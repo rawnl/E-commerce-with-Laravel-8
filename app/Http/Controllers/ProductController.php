@@ -1,16 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+
+use Session;
+
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Category;
 use App\Models\Subscription;
-use Session;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Mail;
 use App\Mail\SubscriptionMail;
 
 
@@ -174,7 +177,30 @@ class ProductController extends Controller
         return redirect(route('home'));
         */
         if($request->payment_method === 'en-ligne'){
-            return redirect(route('stripe'));
+            //return redirect()->route('stripe'); //->with(['total' => $request->total]) ;
+            /*$req = [
+
+            ];*/
+            /*
+            $prix_total = $request->total ;
+            dd($prix_total);
+            */
+            return view('stripe',['request' => $request] );
+        }else{
+            /*
+            foreach($carts as $cart){
+                $order = new Order;
+                $order->product_id = $cart['product_id'];
+                $order->user_id = $cart['user_id'];
+                $order->status='en attente';
+                $order->payment_method = $request->payment_method;
+                $order->payment_status = 'en attente';
+                $order->address = $request->address;
+                $order->save();
+                Cart::where('user_id', $userId)->delete();
+            }
+            return redirect(route('home'));
+            */
         }
     }
 
