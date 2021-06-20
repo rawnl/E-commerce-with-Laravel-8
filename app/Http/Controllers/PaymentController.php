@@ -20,13 +20,7 @@ class PaymentController extends Controller
     public function stripePost(Request $request)
     {
         $userId = Session::get('user')->id;
-        /*$total = DB::table('carts')
-                    ->join('products', 'carts.product_id', '=', 'products.id')
-                    ->where('carts.user_id', $userId)
-                    ->sum('products.price');*/
-        //(int) $request->total,
         $amount = (int) $request->total;
-        //dd($amount);
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         Stripe\Charge::create ([
                 "amount" => $amount, 
@@ -34,16 +28,15 @@ class PaymentController extends Controller
                 "source" => $request->stripeToken,
                 "description" => "This payment is tested purpose"
         ]);
-
         $carts = Cart::where('user_id', $userId)->get();
         foreach($carts as $cart){
             $order = new Order;
             $order->product_id = $cart['product_id'];
             $order->user_id = $cart['user_id'];
             $order->status='en attente';
-            $order->payment_method = 'en-ligne';//$request->payment_method;
+            $order->payment_method = $request->payment_method; 
             $order->payment_status = 'validé';
-            $order->address = 'user @ to fix'; //$request->address;
+            $order->address = $request->address; 
             $order->save();
             Cart::where('user_id', $userId)->delete();
         }
@@ -52,6 +45,5 @@ class PaymentController extends Controller
         
         return redirect(route('home'));   
         
-        //return back();
     }
 }

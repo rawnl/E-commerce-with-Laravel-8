@@ -28,7 +28,7 @@
           <form class="row" action="{{route('confirm_order')}}" method="POST">
             @csrf
             <div class="form-group col-sm-12">
-                <textarea class="form-control" name="address" id="adress" placeholder="Votre adresse"></textarea>
+                <textarea class="form-control" name="address" id="address" placeholder="Votre adresse"></textarea>
             </div>
             <input type="hidden" name="total" value="{{$total+500}}" name="total">
             <div class="form-group col-sm-12">

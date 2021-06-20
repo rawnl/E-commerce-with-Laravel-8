@@ -162,32 +162,10 @@ class ProductController extends Controller
     function confirmOrder(Request $request){
         $userId = Session::get('user')['id'];
         $carts = Cart::where('user_id', $userId)->get();
-        /*
-        foreach($carts as $cart){
-            $order = new Order;
-            $order->product_id = $cart['product_id'];
-            $order->user_id = $cart['user_id'];
-            $order->status='en attente';
-            $order->payment_method = $request->payment_method;
-            $order->payment_status = 'en attente';
-            $order->address = $request->address;
-            $order->save();
-            Cart::where('user_id', $userId)->delete();
-        }
-        return redirect(route('home'));
-        */
+        
         if($request->payment_method === 'en-ligne'){
-            //return redirect()->route('stripe'); //->with(['total' => $request->total]) ;
-            /*$req = [
-
-            ];*/
-            /*
-            $prix_total = $request->total ;
-            dd($prix_total);
-            */
             return view('stripe',['request' => $request] );
         }else{
-            /*
             foreach($carts as $cart){
                 $order = new Order;
                 $order->product_id = $cart['product_id'];
@@ -200,7 +178,6 @@ class ProductController extends Controller
                 Cart::where('user_id', $userId)->delete();
             }
             return redirect(route('home'));
-            */
         }
     }
 

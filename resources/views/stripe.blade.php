@@ -30,6 +30,8 @@
                    id="payment-form">
                    @csrf
                    <input name="total" type='hidden' value="{{$request->total}}">
+                   <input name="address" type='hidden' value="{{$request->address}}">
+                   <input name="payment_method" type='hidden' value="{{$request->payment_method}}">
                    <div class='form-row row'>
                       <div class='col-xs-12 form-group required'>
                          <label class='control-label'>Nom (sur la carte)</label> 
