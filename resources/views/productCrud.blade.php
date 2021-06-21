@@ -56,8 +56,8 @@
               <tr>
                 <th>ID Produit </th>
                 <th>Nom</th>
-                <th>Prix</th>
-                <th>Description</th>
+                <th>Prix original</th>
+                <th>Prix de vente</th>
                 <th>Quantité</th>
                 <th>Actions</th>
               </tr>
@@ -71,7 +71,7 @@
                         <td>{{$item->id}}</td>
                         <td>{{$item->name}}</td>
                         <td>{{$item->price}}</td>
-                        <td>{{$item->description}}</td>
+                        <td>{{$item->sale_price}}</td>
                         <td>{{$item->quantity}}</td>
                         <td>
                           
