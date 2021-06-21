@@ -48,7 +48,7 @@
                     <div class="caption">
                         <h3>{{$item['name']}}</h3>
                         
-                        @if ($item['sale_price'] != null )
+                        @if ($item['sale_price'] != null && $item['sale_price'] != $item['price'])
                             <p>Prix : <del> {{$item['price']}} DA </del> {{$item['sale_price']}} DA</p>                            
                         @else
                             <p>Prix : {{$item['price']}} DA </p>                        

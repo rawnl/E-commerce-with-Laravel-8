@@ -45,6 +45,8 @@ if(Session::has('user')){
         </form>
         <ul class="nav navbar-nav navbar-right">
           
+          <li><a href="{{route('setup')}}" class="btn btn-info">Configurer un PC</a></li>
+          
           @if(Session::has('user'))
             @if(session()->get('user')['type'] == "USR")
               <li><a href="{{route('cart')}}">Panier({{$cartItems}})</a></li>

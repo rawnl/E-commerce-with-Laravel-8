@@ -389,4 +389,17 @@ class ProductController extends Controller
         }
                     
     }
+
+    function setup(){
+        if(Session::has('user')){
+            $products = DB::table('products')
+                    ->join('categories', 'products.category_id', '=', 'categories.id')
+                    ->select('products.*', 'categories.name as category_name')
+                    ->get();
+            //return view('orders', ['orders'=>$orders]);
+            return view('setup', ['setup_products'=>$products]);
+        }else{
+            return redirect(route('login'));
+        }
+    }
 }

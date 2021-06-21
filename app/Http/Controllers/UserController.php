@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
+use Redirect;
+use URL;
+
 class UserController extends Controller
 {
     function login(Request $request){
@@ -19,7 +22,8 @@ class UserController extends Controller
             //return redirect('/');
             if($user->type == "USR"){
                 //return redirect()->url()->previous();
-                return redirect('/');
+                //return redirect('/');
+                return Redirect::to(URL::previous());
             }else{
                 return redirect(route('dashboard'));
             }
