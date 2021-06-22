@@ -56,21 +56,6 @@
                 <input type="radio" value="a-la-livraison" name="payment_method"><span> Paiement à la livraison</span><br>
             </div>
             
-            <div>
-            <!--
-                <input type="hidden" name="selected_monitor" id="monitor"  value="{{$products['monitor']->id}}">
-                <input type="hidden" name="selected_computer_case" id="computer_case" value="{{$products['computer_case']->id}}">
-                <input type="hidden" name="selected_mother_board" id="mother_board" value="{{$products['mother_board']->id}}">
-                <input type="hidden" name="selected_cpu" id="cpu" value="{{$products['cpu']->id}}">
-                <input type="hidden" name="selected_graphic_card" id="graphic_card" value="{{$products['graphic_card']->id}}">
-                <input type="hidden" name="selected_ram" id="ram" value="{{$products['ram']->id}}">
-                <input type="hidden" name="selected_power_supply" id="power_supply" value="{{$products['power_supply']->id}}">
-                <input type="hidden" name="selected_hard_drive" id="hard_drive" value="{{$products['hard_drive']->id}}">
-                <input type="hidden" name="selected_fan" id="fan" value="{{$products['fan']->id}}">
-                <input type="hidden" name="source" id="source" value="setup">
-            -->
-            </div>
-            
             <div class="form-group col-sm-12 text-right">
                 <button type="submit" class="form-group col-sm-12 btn btn-primary">confirmer</button>
             </div>

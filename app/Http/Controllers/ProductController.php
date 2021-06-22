@@ -156,7 +156,7 @@ class ProductController extends Controller
                     ->join('products', 'carts.product_id', '=', 'products.id')
                     ->where('carts.user_id', $userId)
                     ->sum('products.price');
-        return view('ordernow', ['total'=>$total]);
+        return view('ordernow', ['total'=>$total, 'source'=>'cart']);
     }
 
     function confirmOrder(Request $request){
@@ -452,7 +452,7 @@ class ProductController extends Controller
             $cart->save();
         }
 
-        return view('ordernow', ['total'=>$total,'products' => $products, 'request'=>$request, 'source'=>'setup']);  
+        return view('ordernow', ['total'=>$total, 'products'=>$products, 'source'=>'setup']);  
         
     }
 
