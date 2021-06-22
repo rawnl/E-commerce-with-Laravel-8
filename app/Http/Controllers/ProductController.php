@@ -54,7 +54,7 @@ class ProductController extends Controller
                         ->first();
 
             if(!is_null($cart)){
-                $total = $cart->total + $product_price;
+                $total = $cart->total->sale_price + $product_price;
 
                 $Qt = $cart->quantity + 1;
                 $cart = DB::table('carts')
@@ -396,10 +396,73 @@ class ProductController extends Controller
                     ->join('categories', 'products.category_id', '=', 'categories.id')
                     ->select('products.*', 'categories.name as category_name')
                     ->get();
-            //return view('orders', ['orders'=>$orders]);
             return view('setup', ['setup_products'=>$products]);
         }else{
             return redirect(route('login'));
         }
+    }
+
+    public function setupPost(Request $request)
+    {
+        $userId = Session::get('user')['id'];
+        
+        $monitor = Product::find($request->selected_monitor);
+        $computer_case = Product::find($request->selected_computer_case);
+        $mother_board = Product::find($request->selected_mother_board);
+        $cpu = Product::find($request->selected_cpu);
+        $graphic_card = Product::find($request->selected_graphic_card);
+        $ram = Product::find($request->selected_ram);
+        $power_supply = Product::find($request->selected_power_supply);
+        $hard_drive = Product::find($request->selected_hard_drive);
+        $fan = Product::find($request->selected_fan);
+
+        $cart = new Cart();
+        
+        $total =$monitor->sale_price + $computer_case->sale_price + $mother_board->sale_price +
+                   $cpu->sale_price + $graphic_card->sale_price + $ram->sale_price + 
+                   $power_supply->sale_price + $hard_drive->sale_price + $fan->sale_price ;
+        
+        $products = [
+          'monitor' => $monitor,
+          'computer_case' => $computer_case,
+          'mother_board' => $mother_board,
+          'cpu' => $cpu,
+          'graphic_card' => $graphic_card,
+          'ram' => $ram,
+          'power_supply' => $power_supply,
+          'hard_drive' => $hard_drive,
+          'fan' => $fan
+        ];
+        
+                 
+        foreach($products as $product){
+            $cart = DB::table('carts')
+                        ->where('user_id', $request->session()->get('user')['id'] )
+                        ->where('product_id', $request->product_id )
+                        ->first();
+                        
+            if(!is_null($cart)){
+                Cart::destroy($cart->id);
+            }
+            $cart = new Cart();
+            $cart->user_id = $request->session()->get('user')['id'] ;
+            $cart->product_id = $product->id; 
+            $cart->quantity=1;
+            $cart->total = $product->sale_price;
+            $cart->save();
+        }
+
+        return view('ordernow', ['total'=>$total,'products' => $products, 'request'=>$request, 'source'=>'setup']);  
+        
+    }
+
+    public static function addElementToCart($cart, $product, $user_id){
+
+        $cart->user_id = $user_id;
+        $cart->product_id = $request->product_id; 
+        $cart->quantity=1;
+        $cart->total = $product_price;
+        $cart->save();
+    
     }
 }

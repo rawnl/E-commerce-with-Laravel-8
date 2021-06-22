@@ -281,7 +281,8 @@
       </div>
 </section>
 <br><br>
-<form action="">
+<form action="{{route('setup.post')}}" method="POST">
+    @csrf
     <input type="hidden" name="selected_monitor" id="monitor"  value="">
     <input type="hidden" name="selected_computer_case" id="computer_case" value="">
     <input type="hidden" name="selected_mother_board" id="mother_board" value="">
@@ -291,7 +292,7 @@
     <input type="hidden" name="selected_power_supply" id="power_supply" value="">
     <input type="hidden" name="selected_hard_drive" id="hard_drive" value="">
     <input type="hidden" name="selected_fan" id="fan" value="">
-    <input class="btn btn-primary btn-lg btn-block" type="submit" id="submit" value="Valider">
+    <input class="btn btn-primary btn-lg btn-block" type="submit" id="submit" value="Valider" disabled="true">
 </form>
 
 </div>

@@ -78,3 +78,6 @@ Route::get('stripe', [PaymentController::class, 'stripe'])->name('stripe');
 Route::post('stripe', [PaymentController::class, 'stripePost'])->name('stripe.post');
 
 Route::get('setup', [ProductController::class, 'setup'])->name('setup');
+
+Route::post('setup', [ProductController::class, 'setupPost'])->name('setup.post');
+

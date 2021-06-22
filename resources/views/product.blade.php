@@ -13,17 +13,21 @@
      
       <!-- Wrapper for slides -->
       <div class="carousel-inner">
-        
+        <!--{{$counter = 0}}-->
         @foreach ($products as $item)
-            <div class="item {{$item['id']==1?'active':'' }}">
-                <a href="detail/{{$item['id']}}">
-                <img src="{{asset('storage/images/'.$item['image'])}}" class="slider-image">
-                <div class="carousel-caption slider-text">
-                    <h3>{{$item['name']}}</h3>
-                    <p>{{$item['short_description']}}</p>
-                </div>
-                </a>
-            </div>
+            @if ($counter < 3)
+                <div class="item {{$item['id']==1?'active':'' }}">
+                    <a href="detail/{{$item['id']}}">
+                    <img src="{{asset('storage/images/'.$item['image'])}}" class="slider-image">
+                    <div class="carousel-caption slider-text">
+                        <h3>{{$item['name']}}</h3>
+                        <p>{{$item['short_description']}}</p>
+                    </div>
+                    </a>
+                </div>
+            @endif
+            
+        <!--{{$counter++}}-->
         @endforeach
 
       </div>
