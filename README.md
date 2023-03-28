@@ -1,7 +1,7 @@
 
 # LARAVEL 8 - SIMPLE & BASIC E-commerce Website :
 
-## DEMO : [watch on youtube](https://www.youtube.com/channel/UCnblSyOrZtJRu4pUjxKM3eA)
+## DEMO : [watch on youtube](https://www.youtube.com/watch?v=UCsy4oZtJ20&list=PL_x1lW4tRkmz0W-zSudVqahnsxGAqfsa3)
 
 ## USERS & FUNCTIONALITIES:
 
@@ -18,7 +18,7 @@
 
 
 ### Admin can :
-- Confirm / Cancel comands
+- Confirm / Cancel orders
 - Block / Unblock users
 - Add / delete / edit a product 
 - Add / delete / edit a category
